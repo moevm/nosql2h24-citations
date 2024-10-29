@@ -2,13 +2,18 @@
     font-size: 20px;
     font-weight: bold;
     color: #E85A4F;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
 }
 
 .filter {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .filter input[type="checkbox"] {
@@ -17,7 +22,7 @@
     height: 18px;
     border: 2px solid #E85A4F;
     border-radius: 2px;
-    margin-right: 10px;
+    margin-right: 8px;
     position: relative;
     cursor: pointer;
 }

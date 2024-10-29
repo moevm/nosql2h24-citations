@@ -4,10 +4,13 @@ import React, { useState } from 'react';
 
 
 const YearSlider = () => {
-    const [minYear, setMinYear] = useState(1999);
-    const [maxYear, setMaxYear] = useState(2024);
-    const min = 1800;
+
+    const min = 1999;
     const max = 2024;
+
+    const [minYear, setMinYear] = useState(min);
+    const [maxYear, setMaxYear] = useState(max);
+
 
 
     const handleSliderChange = (values) => {
@@ -46,7 +49,7 @@ const YearSlider = () => {
             />
             <div className="year-inputs">
                 <input
-                    type="number"
+                    type="digit"
                     value={minYear}
                     className="year-input"
                     min={min}
@@ -55,7 +58,7 @@ const YearSlider = () => {
                 />
                 <span className="dash">—</span>
                 <input
-                    type="number"
+                    type="digit"
                     value={maxYear}
                     className="year-input"
                     min={minYear + 1}
