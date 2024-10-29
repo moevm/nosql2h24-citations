@@ -45,19 +45,3 @@
     font-size: 16px;
     cursor: pointer;
 }
-
-/* Ссылка для показа всех элементов */
-.show-all {
-    display: flex;
-    align-items: center;
-    color: #d97a63;
-    font-size: 0.9em;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.show-all::before {
-    content: "+";
-    margin-right: 5px;
-    color: #d97a63;
-}
