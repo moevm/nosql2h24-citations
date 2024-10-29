@@ -7,11 +7,15 @@
 .main-content {
   display: flex;
   flex-grow: 1;
-  padding: 32px 100px ;
+  padding: 32px 100px 32px 100px ;
+
+}
+
+.sidebar {
 }
 
 .content {
-  flex-grow: 1;
-  padding: 20px;
+  width: 100%;
+  margin-left: 64px;
 }
 
