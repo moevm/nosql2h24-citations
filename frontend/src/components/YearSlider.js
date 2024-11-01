@@ -3,9 +3,9 @@ import '../css/YearSlider.css';
 import React, { useState } from 'react';
 
 
-const YearSlider = () => {
+const YearSlider = ({ onYearRangeChange }) => {
 
-    const min = 1999;
+    const min = 1800;
     const max = 2024;
 
     const [minYear, setMinYear] = useState(min);
@@ -17,18 +17,21 @@ const YearSlider = () => {
         const [newMinYear, newMaxYear] = values;
         setMinYear(newMinYear);
         setMaxYear(newMaxYear);
+        onYearRangeChange([newMinYear, newMaxYear]);
     };
 
 
     const handleMinInputChange = (e) => {
         const value = Math.min(Number(e.target.value), maxYear - 1);
         setMinYear(value);
+        onYearRangeChange([value, maxYear]);
     };
 
 
     const handleMaxInputChange = (e) => {
         const value = Math.max(Number(e.target.value), minYear + 1);
         setMaxYear(value);
+        onYearRangeChange([minYear, value]);
     };
 
     return (
