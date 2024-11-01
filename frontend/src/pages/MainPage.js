@@ -6,6 +6,7 @@ import "../css/MainPage.css"
 
 const MainPage = () => {
         const [quotes, setQuotes] = useState([]);
+        const [searchTerm, setSearchTerm] = useState('');
 
         useEffect(() => {
             const fetchQuotes = async () => {
@@ -24,13 +25,35 @@ const MainPage = () => {
             fetchQuotes();
         }, []);
 
+    const handleSearch = async (keyword) => {
+        setSearchTerm(keyword);
+
+        if (keyword === '') {
+            const response = await fetch('http://localhost:3000/quotes');
+            const data = await response.json();
+            setQuotes(data);
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:3000/quotes/search?keyword=${keyword}`);
+            if (!response.ok) {
+                throw new Error('Ошибка при поиске цитат');
+            }
+            const data = await response.json();
+            setQuotes(data);
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
         return (
             <div className="main-content">
                 <div className="sidebar">
                     <Sidebar/>
                 </div>
                 <div className="content">
-                    <SearchBar/>
+                    <SearchBar onSearch={handleSearch} />
                     {quotes.map((quote, index) => (
                         <CitationCard key={index} {...quote} />
                     ))}
