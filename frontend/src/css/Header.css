@@ -1,0 +1,25 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #D8C3A5;
+}
+
+.logo {
+    margin-left: 100px;
+}
+
+
+.nav-menu {
+    display: flex;
+    gap: 16px;
+    margin-left: 100px;
+}
+
+.nav-menu a {
+    text-decoration: underline;
+    color: #E85A4F;
+    font-weight: bold;
+    font-size: 24px;
+}

@@ -1,0 +1,58 @@
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.slider-title {
+  color: #E85A4F;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+
+.horizontal-slider {
+  height: 1px;
+  background: #E85A4F;
+  position: relative;
+}
+
+
+.thumb {
+  height: 18px;
+  width: 18px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 50%;
+  cursor: grab;
+  position: relative;
+  top: -9px;
+  z-index: 3;
+
+}
+
+
+.year-inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+.year-input {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+.dash {
+  margin: 0 10px;
+  font-size: 18px;
+}
