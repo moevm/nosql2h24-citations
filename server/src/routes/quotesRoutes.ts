@@ -1,10 +1,9 @@
 import express from 'express';
-import { getQuotes, searchQuotes, filterQuotes } from '../controllers/quotesController';
+import {getQuotes, filterAndSearchQuotes} from '../controllers/quotesController';
 
 const router = express.Router();
 
 router.get('/', getQuotes);
-router.get('/search', searchQuotes);
-router.get('/filter', filterQuotes);
+router.get('/search', filterAndSearchQuotes);
 
 export default router;
