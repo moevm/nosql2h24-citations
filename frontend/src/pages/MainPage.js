@@ -10,7 +10,7 @@ const MainPage = () => {
         const [filters, setFilters] = useState({
             authorName: [],
             bookName: [],
-            bookYear: [1800, 2024],
+            bookYear: [],
             heroName: [],
         });
 
@@ -21,16 +21,28 @@ const MainPage = () => {
     const fetchFilteredAndSearchedQuotes = async () => {
         const queryParams = new URLSearchParams();
 
-        if (filters.authorName.length) queryParams.append('authorNames', filters.authorName.join(','));
-        if (filters.bookName.length) queryParams.append('bookNames', filters.bookName.join(','));
-        if (filters.bookYear) {
-            queryParams.append('bookYearStart', filters.bookYear[0]);
-            queryParams.append('bookYearEnd', filters.bookYear[1]);
+        if (filters.authorName.length) {
+            filters.authorName.forEach((author) => {
+                queryParams.append('authorNames', author);
+            });
         }
-        if (filters.heroName.length) queryParams.append('heroes', filters.heroName.join(','));
+        if (filters.bookName.length) {
+            filters.bookName.forEach((book) => {
+                queryParams.append('bookNames', book);
+            });
+        }
+        // if (filters.bookYear) {
+        //     queryParams.append('bookYearStart', filters.bookYear[0]);
+        //     queryParams.append('bookYearEnd', filters.bookYear[1]);
+        // }
+        if (filters.heroName.length) {
+            filters.heroName.forEach((hero) => {
+                queryParams.append('heroes', hero);
+            });
+        } 
         if (searchTerm) queryParams.append('keyword', searchTerm);
         queryParams.append('page', page.toString());
-        queryParams.append('pageSize', '10'); // Указываем размер страницы
+        queryParams.append('pageSize', '100');
 
         try {
             const response = await fetch(`http://localhost:3000/quotes/search?${queryParams.toString()}`);

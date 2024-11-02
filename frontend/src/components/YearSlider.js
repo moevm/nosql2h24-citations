@@ -1,37 +1,40 @@
 import ReactSlider from 'react-slider';
 import '../css/YearSlider.css';
-import React, { useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 
-const YearSlider = ({ onYearRangeChange }) => {
+const YearSlider = ({ onYearRangeChange, initialRange }) => {
+    const [yearRange, setYearRange] = useState(initialRange);
+    const [initial, setInitial] = useState(initialRange);
 
-    const min = 1800;
-    const max = 2024;
+    useEffect(() => {
+        if (initial[0] !== initialRange[0] || initial[1] !== initialRange[1]) {
+            setInitial(initialRange);
+        }
+    }, [initialRange]);
 
-    const [minYear, setMinYear] = useState(min);
-    const [maxYear, setMaxYear] = useState(max);
-
-
+    useEffect(() => {
+        setYearRange(initialRange);
+    }, [initialRange]);
 
     const handleSliderChange = (values) => {
-        const [newMinYear, newMaxYear] = values;
-        setMinYear(newMinYear);
-        setMaxYear(newMaxYear);
-        onYearRangeChange([newMinYear, newMaxYear]);
+        setYearRange(values);
+        onYearRangeChange(values);
     };
 
 
-    const handleMinInputChange = (e) => {
-        const value = Math.min(Number(e.target.value), maxYear - 1);
-        setMinYear(value);
-        onYearRangeChange([value, maxYear]);
+    const handleMinYearChange = (e) => {
+        const newMinYear = Math.min(Math.max(initialRange[0], +e.target.value), yearRange[1] - 1);
+        const newRange = [newMinYear, yearRange[1]];
+        setYearRange(newRange);
+        onYearRangeChange(newRange);
     };
 
-
-    const handleMaxInputChange = (e) => {
-        const value = Math.max(Number(e.target.value), minYear + 1);
-        setMaxYear(value);
-        onYearRangeChange([minYear, value]);
+    const handleMaxYearChange = (e) => {
+        const newMaxYear = Math.max(Math.min(initialRange[1], +e.target.value), yearRange[0] + 1);
+        const newRange = [yearRange[0], newMaxYear];
+        setYearRange(newRange);
+        onYearRangeChange(newRange);
     };
 
     return (
@@ -43,30 +46,30 @@ const YearSlider = ({ onYearRangeChange }) => {
                 className="horizontal-slider"
                 thumbClassName="thumb"
                 trackClassName="track"
-                value={[minYear, maxYear]}
-                min={min}
-                max={max}
-                onChange={handleSliderChange}
+                value={yearRange}
+                min={initial[0]}
+                max={initial[1]}
+                onAfterChange={handleSliderChange}
                 allowCross={false}
                 minDistance={1}
             />
             <div className="year-inputs">
                 <input
-                    type="digit"
-                    value={minYear}
+                    type="number"
+                    value={yearRange[0]}
                     className="year-input"
-                    min={min}
-                    max={maxYear - 1}
-                    onChange={handleMinInputChange}
+                    min={initial[0]}
+                    max={yearRange[1] - 1}
+                    onChange={handleMinYearChange}
                 />
                 <span className="dash">—</span>
                 <input
-                    type="digit"
-                    value={maxYear}
+                    type="number"
+                    value={yearRange[1]}
                     className="year-input"
-                    min={minYear + 1}
-                    max={max}
-                    onChange={handleMaxInputChange}
+                    min={yearRange[0] + 1}
+                    max={initial[1]}
+                    onChange={handleMaxYearChange}
                 />
             </div>
         </div>

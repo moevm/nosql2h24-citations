@@ -1,12 +1,41 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../css/Sidebar.css';
 import YearSlider from "./YearSlider";
 
 const Sidebar = ({ onFilterChange })  => {
+    const [authors, setAuthors] = useState([]);
+    const [books, setBooks] = useState([]);
+    const [heroes, setHeroes] = useState([]);
     const [selectedAuthors, setSelectedAuthors] = useState([]);
     const [selectedBooks, setSelectedBooks] = useState([]);
     const [selectedHeroes, setSelectedHeroes] = useState([]);
-    const [yearRange, setYearRange] = useState([1800, 2024]);
+    const [yearRange, setYearRange] = useState([]);
+
+    useEffect(() => {
+        const fetchFilters = async () => {
+            try {
+                const authorsResponse = await fetch('http://localhost:3000/filters/authors');
+                const authorsData = await authorsResponse.json();
+                setAuthors(authorsData);
+
+                const booksResponse = await fetch('http://localhost:3000/filters/books');
+                const booksData = await booksResponse.json();
+                setBooks(booksData);
+
+                const heroesResponse = await fetch('http://localhost:3000/filters/heroes');
+                const heroesData = await heroesResponse.json();
+                setHeroes(heroesData);
+
+                const yearsResponse = await fetch('http://localhost:3000/filters/years');
+                const yearsData = await yearsResponse.json();
+                setYearRange([yearsData.minYear, yearsData.maxYear]);
+            } catch (error) {
+                console.error('Error fetching filter data:', error);
+            }
+        };
+
+        fetchFilters();
+    }, []);
 
     const handleCheckboxChange = (category, value) => {
         let updatedSelection;
@@ -47,40 +76,46 @@ const Sidebar = ({ onFilterChange })  => {
         <div className="sidebar">
             <h3>Произведение</h3>
             <div className="filters">
-                <div className="filter">
-                    <input
-                        type="checkbox"
-                        id="book1"
-                        onChange={() => handleCheckboxChange('bookName', 'Дубровский')}
-                    />
-                    <label htmlFor="book1">Дубровский</label>
-                </div>
+                {books.map((book, index) => (
+                    <div className="filter" key={index}>
+                        <input
+                            type="checkbox"
+                            id={`book-${index}`}
+                            onChange={() => handleCheckboxChange('bookName', book)}
+                        />
+                        <label htmlFor={`book-${index}`}>{book}</label>
+                    </div>
+                ))}
             </div>
 
             <h3>Автор</h3>
             <div className="filters">
-                <div className="filter">
-                    <input
-                        type="checkbox"
-                        id="author1"
-                        onChange={() => handleCheckboxChange('authorName', 'Александр Сергеевич Пушкин')}
-                    />
-                    <label htmlFor="author1">Александр Сергеевич Пушкин</label>
-                </div>
+                {authors.map((author, index) => (
+                    <div className="filter" key={index}>
+                        <input
+                            type="checkbox"
+                            id={`author-${index}`}
+                            onChange={() => handleCheckboxChange('authorName', author)}
+                        />
+                        <label htmlFor={`author-${index}`}>{author}</label>
+                    </div>
+                ))}
             </div>
 
-            <YearSlider onYearRangeChange={handleYearRangeChange}/>
+            {/*<YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange} />*/}
 
             <h3>Герой</h3>
             <div className="filters">
-                <div className="filter">
-                    <input
-                        type="checkbox"
-                        id="hero1"
-                        onChange={() => handleCheckboxChange('heroName', 'Дубровский')}
-                    />
-                    <label htmlFor="hero1">Дубровский</label>
-                </div>
+                {heroes.map((hero, index) => (
+                    <div className="filter" key={index}>
+                        <input
+                            type="checkbox"
+                            id={`hero-${index}`}
+                            onChange={() => handleCheckboxChange('heroName', hero)}
+                        />
+                        <label htmlFor={`hero-${index}`}>{hero}</label>
+                    </div>
+                ))}
             </div>
         </div>
     );

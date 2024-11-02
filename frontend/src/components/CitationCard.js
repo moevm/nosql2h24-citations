@@ -6,7 +6,7 @@ const CitationCard = ({ quote, authorName, book, heroName }) => {
         <div className="citation-card">
             <p className="citation-text">{quote}</p>
             <div className="citation-details">
-                <span className="hero">© {heroName}</span>
+                <span className="hero">© {heroName || "Слова автора"}</span>
                 <span className="book">{book.name} </span>
                 <span className="author">{authorName}</span>
             </div>
