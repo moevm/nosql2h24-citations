@@ -14,76 +14,50 @@ const MainPage = () => {
             heroName: [],
         });
 
+        const [page, setPage] = useState(1);
+        const [totalPages, setTotalPages] = useState(1);
 
-        useEffect(() => {
-            const fetchQuotes = async () => {
-                try {
-                    const response = await fetch('http://localhost:3000/quotes');
-                    if (!response.ok) {
-                        throw new Error('Ошибка при получении цитат');
-                    }
-                    const data = await response.json();
-                    setQuotes(data);
-                } catch (error) {
-                    console.error(error.message);
-                }
-            };
 
-            fetchQuotes();
-        }, []);
+    const fetchFilteredAndSearchedQuotes = async () => {
+        const queryParams = new URLSearchParams();
 
-        const handleSearch = async (keyword) => {
-            setSearchTerm(keyword);
+        if (filters.authorName.length) queryParams.append('authorNames', filters.authorName.join(','));
+        if (filters.bookName.length) queryParams.append('bookNames', filters.bookName.join(','));
+        if (filters.bookYear) {
+            queryParams.append('bookYearStart', filters.bookYear[0]);
+            queryParams.append('bookYearEnd', filters.bookYear[1]);
+        }
+        if (filters.heroName.length) queryParams.append('heroes', filters.heroName.join(','));
+        if (searchTerm) queryParams.append('keyword', searchTerm);
+        queryParams.append('page', page.toString());
+        queryParams.append('pageSize', '10'); // Указываем размер страницы
 
-            if (keyword === '') {
-                const response = await fetch('http://localhost:3000/quotes');
-                const data = await response.json();
-                setQuotes(data);
-                return;
+        try {
+            const response = await fetch(`http://localhost:3000/quotes/search?${queryParams.toString()}`);
+            if (!response.ok) {
+                throw new Error('Ошибка при поиске и фильтрации цитат');
             }
+            const data = await response.json();
+            setQuotes(data.data);
+            setTotalPages(data.totalPages);
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
 
-            try {
-                const response = await fetch(`http://localhost:3000/quotes/search?keyword=${keyword}`);
-                if (!response.ok) {
-                    throw new Error('Ошибка при поиске цитат');
-                }
-                const data = await response.json();
-                setQuotes(data);
-            } catch (error) {
-                console.error(error.message);
-            }
-        };
+    useEffect(() => {
+        fetchFilteredAndSearchedQuotes();
+    }, [searchTerm, filters, page]);
 
-        useEffect(() => {
-            const fetchFilteredQuotes = async () => {
-                const queryParams = new URLSearchParams();
+    const handleSearch = (keyword) => {
+        setSearchTerm(keyword);
+        setPage(1);
+    };
 
-                if (filters.authorName.length) queryParams.append('authorName', filters.authorName.join(','));
-                if (filters.bookName.length) queryParams.append('bookName', filters.bookName.join(','));
-                if (filters.bookYear) {
-                    queryParams.append('bookYearStart', filters.bookYear[0]);
-                    queryParams.append('bookYearEnd', filters.bookYear[1]);
-                }
-                if (filters.heroName.length) queryParams.append('heroName', filters.heroName.join(','));
-
-                try {
-                    const response = await fetch(`http://localhost:3000/quotes/filter?${queryParams.toString()}`);
-                    if (!response.ok) {
-                        throw new Error('Ошибка при фильтрации цитат');
-                    }
-                    const data = await response.json();
-                    setQuotes(data);
-                } catch (error) {
-                    console.error(error.message);
-                }
-            };
-
-            fetchFilteredQuotes();
-        }, [filters]);
-
-        const updateFilters = (updatedFilters) => {
-            setFilters((prevFilters) => ({...prevFilters, ...updatedFilters}));
-        };
+    const updateFilters = (updatedFilters) => {
+        setFilters((prevFilters) => ({ ...prevFilters, ...updatedFilters }));
+        setPage(1);
+    };
 
         return (
             <div className="main-content">
