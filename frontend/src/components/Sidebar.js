@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import '../css/Sidebar.css';
 import YearSlider from "./YearSlider";
+import {faChevronDown, faChevronUp, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Sidebar = ({ onFilterChange })  => {
     const [authors, setAuthors] = useState([]);
@@ -10,6 +12,19 @@ const Sidebar = ({ onFilterChange })  => {
     const [selectedBooks, setSelectedBooks] = useState([]);
     const [selectedHeroes, setSelectedHeroes] = useState([]);
     const [yearRange, setYearRange] = useState([]);
+
+    const defaultDisplayCount = 10;
+    const [displayCount, setDisplayCount] = useState({
+        books: defaultDisplayCount,
+        authors: defaultDisplayCount,
+        heroes: defaultDisplayCount,
+    });
+
+    const [filterVisibility, setFilterVisibility] = useState({
+        authors: true,
+        books: true,
+        heroes: true,
+    });
 
     useEffect(() => {
         const fetchFilters = async () => {
@@ -71,51 +86,112 @@ const Sidebar = ({ onFilterChange })  => {
     };
 
 
+    const toggleFilterVisibility = (filterName) => {
+        setFilterVisibility(prev => ({
+            ...prev,
+            [filterName]: !prev[filterName]
+        }));
+        if (filterVisibility[filterName]) {
+            setDisplayCount(prev => ({
+                ...prev,
+                [filterName]: defaultDisplayCount
+            }));
+        }
+    };
+
+    const handleShowMore = (category) => {
+        setDisplayCount(prev => ({
+            ...prev,
+            [category]: prev[category] === defaultDisplayCount ? (category === 'books' ? books.length : category === 'authors' ? authors.length : heroes.length) : defaultDisplayCount
+        }));
+    };
+
+
+
 
     return (
         <div className="sidebar">
-            <h3>Произведение</h3>
-            <div className="filters">
-                {books.map((book, index) => (
-                    <div className="filter" key={index}>
-                        <input
-                            type="checkbox"
-                            id={`book-${index}`}
-                            onChange={() => handleCheckboxChange('bookName', book)}
-                        />
-                        <label htmlFor={`book-${index}`}>{book}</label>
+            <div className="filter-section">
+                <h3 onClick={() => toggleFilterVisibility('books')} style={{ cursor: 'pointer' }}>
+                    Произведение
+                    <FontAwesomeIcon icon={filterVisibility.books ? faChevronUp : faChevronDown} className="icon" />
+                </h3>
+                {filterVisibility.books && (
+                    <div className="filters">
+                        {books.slice(0, displayCount.books).map((book, index) => (
+                            <div className="filter" key={index}>
+                                <input
+                                    type="checkbox"
+                                    id={`book-${index}`}
+                                    onChange={() => handleCheckboxChange('bookName', book)}
+                                    checked={selectedBooks.includes(book)}
+                                />
+                                <label htmlFor={`book-${index}`}>{book}</label>
+                            </div>
+                        ))}
+                        {books.length > defaultDisplayCount && (
+                            <button onClick={() => handleShowMore('books')} className="show-more">
+                                <FontAwesomeIcon icon={faPlus} /> {displayCount.books === defaultDisplayCount ? 'Показать все' : 'Скрыть'}
+                            </button>
+                        )}
                     </div>
-                ))}
+                )}
             </div>
 
-            <h3>Автор</h3>
-            <div className="filters">
-                {authors.map((author, index) => (
-                    <div className="filter" key={index}>
-                        <input
-                            type="checkbox"
-                            id={`author-${index}`}
-                            onChange={() => handleCheckboxChange('authorName', author)}
-                        />
-                        <label htmlFor={`author-${index}`}>{author}</label>
+            <div className="filter-section">
+                <h3 onClick={() => toggleFilterVisibility('authors')} style={{ cursor: 'pointer' }}>
+                    Автор
+                    <FontAwesomeIcon icon={filterVisibility.authors ? faChevronUp : faChevronDown} className="icon" />
+                </h3>
+                {filterVisibility.authors && (
+                    <div className="filters">
+                        {authors.slice(0, displayCount.authors).map((author, index) => (
+                            <div className="filter" key={index}>
+                                <input
+                                    type="checkbox"
+                                    id={`author-${index}`}
+                                    onChange={() => handleCheckboxChange('authorName', author)}
+                                    checked={selectedAuthors.includes(author)}
+                                />
+                                <label htmlFor={`author-${index}`}>{author}</label>
+                            </div>
+                        ))}
+                        {authors.length > defaultDisplayCount && (
+                            <button onClick={() => handleShowMore('authors')} className="show-more">
+                                <FontAwesomeIcon icon={faPlus} /> {displayCount.authors === defaultDisplayCount ? 'Показать все' : 'Скрыть'}
+                            </button>
+                        )}
                     </div>
-                ))}
+                )}
             </div>
 
             <YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange} />
 
-            <h3>Герой</h3>
-            <div className="filters">
-                {heroes.map((hero, index) => (
-                    <div className="filter" key={index}>
-                        <input
-                            type="checkbox"
-                            id={`hero-${index}`}
-                            onChange={() => handleCheckboxChange('heroName', hero)}
-                        />
-                        <label htmlFor={`hero-${index}`}>{hero}</label>
+            <div className="filter-section">
+                <h3 onClick={() => toggleFilterVisibility('heroes')} style={{ cursor: 'pointer' }}>
+                    Герой
+                    <FontAwesomeIcon icon={filterVisibility.heroes ? faChevronUp : faChevronDown} className="icon" />
+                </h3>
+                {filterVisibility.heroes && (
+                    <div className="filters">
+                        {heroes.slice(0, displayCount.heroes).map((hero, index) => (
+                            <div className="filter" key={index}>
+                                <input
+                                    type="checkbox"
+                                    id={`hero-${index}`}
+                                    onChange={() => handleCheckboxChange('heroName', hero)}
+                                    checked={selectedHeroes.includes(hero)}
+                                />
+                                <label htmlFor={`hero-${index}`}>{hero}</label>
+                            </div>
+                        ))}
+                        {heroes.length > defaultDisplayCount && (
+                            <button onClick={() => handleShowMore('heroes')} className="show-more">
+                                <FontAwesomeIcon icon={faPlus} /> {displayCount.heroes === defaultDisplayCount ? 'Показать все' : 'Скрыть'}
+                            </button>
+                        )}
                     </div>
-                ))}
+                )}
             </div>
         </div>
     );

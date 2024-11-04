@@ -4,6 +4,8 @@
     color: #E85A4F;
     margin-bottom: 16px;
     margin-top: 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .filters {
@@ -45,4 +47,22 @@
 .filter label {
     font-size: 16px;
     cursor: pointer;
+}
+
+.icon {
+    margin-left: 8px;
+}
+.show-more {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: none;
+    color: #E85A4F;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 16px;
+}
+.show-more:hover {
+    color: #d9534f;
 }
