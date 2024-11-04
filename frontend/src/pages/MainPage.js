@@ -31,10 +31,10 @@ const MainPage = () => {
                 queryParams.append('bookNames', book);
             });
         }
-        // if (filters.bookYear) {
-        //     queryParams.append('bookYearStart', filters.bookYear[0]);
-        //     queryParams.append('bookYearEnd', filters.bookYear[1]);
-        // }
+        if (filters.bookYear.length) {
+            queryParams.append('bookYearStart', filters.bookYear[0]);
+            queryParams.append('bookYearEnd', filters.bookYear[1]);
+        }
         if (filters.heroName.length) {
             filters.heroName.forEach((hero) => {
                 queryParams.append('heroes', hero);

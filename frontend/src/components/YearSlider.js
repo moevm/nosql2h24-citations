@@ -1,6 +1,6 @@
 import ReactSlider from 'react-slider';
 import '../css/YearSlider.css';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 
 const YearSlider = ({ onYearRangeChange, initialRange }) => {
@@ -10,6 +10,7 @@ const YearSlider = ({ onYearRangeChange, initialRange }) => {
     useEffect(() => {
         if (initial[0] !== initialRange[0] || initial[1] !== initialRange[1]) {
             setInitial(initialRange);
+            setYearRange(initialRange);
         }
     }, [initialRange]);
 
@@ -36,6 +37,7 @@ const YearSlider = ({ onYearRangeChange, initialRange }) => {
         setYearRange(newRange);
         onYearRangeChange(newRange);
     };
+
 
     return (
         <div className="slider-wrapper">

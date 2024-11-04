@@ -66,7 +66,7 @@ const Sidebar = ({ onFilterChange })  => {
     };
 
     const handleYearRangeChange = (newRange) => {
-        setYearRange(newRange);
+        // setYearRange(newRange);
         onFilterChange({ bookYear: newRange });
     };
 
@@ -102,7 +102,7 @@ const Sidebar = ({ onFilterChange })  => {
                 ))}
             </div>
 
-            {/*<YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange} />*/}
+            <YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange} />
 
             <h3>Герой</h3>
             <div className="filters">
