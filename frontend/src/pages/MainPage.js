@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import SearchBar from "../components/SearchBar";
 import CitationCard from "../components/CitationCard";
 import "../css/MainPage.css"
+import Pagination from "../components/Pagination";
 
 const MainPage = () => {
         const [quotes, setQuotes] = useState([]);
@@ -42,7 +43,7 @@ const MainPage = () => {
         } 
         if (searchTerm) queryParams.append('keyword', searchTerm);
         queryParams.append('page', page.toString());
-        queryParams.append('pageSize', '100');
+        queryParams.append('pageSize', '20');
 
         try {
             const response = await fetch(`http://localhost:3000/quotes/search?${queryParams.toString()}`);
@@ -70,6 +71,9 @@ const MainPage = () => {
         setFilters((prevFilters) => ({ ...prevFilters, ...updatedFilters }));
         setPage(1);
     };
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    };
 
         return (
             <div className="main-content">
@@ -81,6 +85,7 @@ const MainPage = () => {
                     {quotes.map((quote, index) => (
                         <CitationCard key={index} {...quote} />
                     ))}
+                    <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange} />
                 </div>
             </div>
         )
