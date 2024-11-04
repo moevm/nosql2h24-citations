@@ -54,7 +54,9 @@ export const filterAndSearchQuotes = async (req: Request, res: Response) => {
     }
 
     if (keyword) {
-        filter.quote = new RegExp(keyword as string, 'i');
+        const russianLettersOnly = keyword.toString().replace(/[^А-Яа-яЁё]/g, '');
+        const regexPattern = russianLettersOnly.split('').join('.*');
+        filter.quote = new RegExp(regexPattern, 'i');
     }
 
     try {
