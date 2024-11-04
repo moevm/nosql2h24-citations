@@ -1,29 +1,17 @@
-
 import './App.css';
-import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
-import SearchBar from "./components/SearchBar";
-import CitationCard from "./components/CitationCard";
+import AppRoutes from "./routers";
+import {BrowserRouter} from 'react-router-dom';
 
 function App() {
-  return (
-      <div className="App">
-          <Header/>
-          <div className="main-content">
-              <div className="sidebar">
-                  <Sidebar/>
-              </div>
-              <div className="content">
-                  <SearchBar/>
-                  <CitationCard/>
-                  <CitationCard/>
-                  <CitationCard/>
-                  <CitationCard/>
-                  <CitationCard/>
-              </div>
-          </div>
-      </div>
-  );
+    return (
+        <div className="App">
+            <Header/>
+            <BrowserRouter>
+                <AppRoutes/>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
