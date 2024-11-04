@@ -4,7 +4,7 @@ import YearSlider from "./YearSlider";
 import {faChevronDown, faChevronUp, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const Sidebar = ({ onFilterChange })  => {
+const Sidebar = ({onFilterChange}) => {
     const [authors, setAuthors] = useState([]);
     const [books, setBooks] = useState([]);
     const [heroes, setHeroes] = useState([]);
@@ -59,17 +59,17 @@ const Sidebar = ({ onFilterChange })  => {
             case 'authorName':
                 updatedSelection = toggleSelection(selectedAuthors, value);
                 setSelectedAuthors(updatedSelection);
-                onFilterChange({ authorName: updatedSelection });
+                onFilterChange({authorName: updatedSelection});
                 break;
             case 'bookName':
                 updatedSelection = toggleSelection(selectedBooks, value);
                 setSelectedBooks(updatedSelection);
-                onFilterChange({ bookName: updatedSelection });
+                onFilterChange({bookName: updatedSelection});
                 break;
             case 'heroName':
                 updatedSelection = toggleSelection(selectedHeroes, value);
                 setSelectedHeroes(updatedSelection);
-                onFilterChange({ heroName: updatedSelection });
+                onFilterChange({heroName: updatedSelection});
                 break;
             default:
                 break;
@@ -82,7 +82,7 @@ const Sidebar = ({ onFilterChange })  => {
 
     const handleYearRangeChange = (newRange) => {
         // setYearRange(newRange);
-        onFilterChange({ bookYear: newRange });
+        onFilterChange({bookYear: newRange});
     };
 
 
@@ -107,14 +107,12 @@ const Sidebar = ({ onFilterChange })  => {
     };
 
 
-
-
     return (
         <div className="sidebar">
             <div className="filter-section">
-                <h3 onClick={() => toggleFilterVisibility('books')} style={{ cursor: 'pointer' }}>
+                <h3 onClick={() => toggleFilterVisibility('books')} style={{cursor: 'pointer'}}>
                     Произведение
-                    <FontAwesomeIcon icon={filterVisibility.books ? faChevronUp : faChevronDown} className="icon" />
+                    <FontAwesomeIcon icon={filterVisibility.books ? faChevronUp : faChevronDown} className="icon"/>
                 </h3>
                 {filterVisibility.books && (
                     <div className="filters">
@@ -129,9 +127,9 @@ const Sidebar = ({ onFilterChange })  => {
                                 <label htmlFor={`book-${index}`}>{book}</label>
                             </div>
                         ))}
-                        {books.length > defaultDisplayCount && (
+                        {books.length > defaultDisplayCount && displayCount.books === defaultDisplayCount && (
                             <button onClick={() => handleShowMore('books')} className="show-more">
-                                <FontAwesomeIcon icon={faPlus} /> {displayCount.books === defaultDisplayCount ? 'Показать все' : 'Скрыть'}
+                                <FontAwesomeIcon icon={faPlus} /> Показать все
                             </button>
                         )}
                     </div>
@@ -139,9 +137,9 @@ const Sidebar = ({ onFilterChange })  => {
             </div>
 
             <div className="filter-section">
-                <h3 onClick={() => toggleFilterVisibility('authors')} style={{ cursor: 'pointer' }}>
+                <h3 onClick={() => toggleFilterVisibility('authors')} style={{cursor: 'pointer'}}>
                     Автор
-                    <FontAwesomeIcon icon={filterVisibility.authors ? faChevronUp : faChevronDown} className="icon" />
+                    <FontAwesomeIcon icon={filterVisibility.authors ? faChevronUp : faChevronDown} className="icon"/>
                 </h3>
                 {filterVisibility.authors && (
                     <div className="filters">
@@ -156,21 +154,21 @@ const Sidebar = ({ onFilterChange })  => {
                                 <label htmlFor={`author-${index}`}>{author}</label>
                             </div>
                         ))}
-                        {authors.length > defaultDisplayCount && (
+                        {authors.length > defaultDisplayCount && displayCount.authors === defaultDisplayCount && (
                             <button onClick={() => handleShowMore('authors')} className="show-more">
-                                <FontAwesomeIcon icon={faPlus} /> {displayCount.authors === defaultDisplayCount ? 'Показать все' : 'Скрыть'}
+                                <FontAwesomeIcon icon={faPlus} /> Показать все
                             </button>
                         )}
                     </div>
                 )}
             </div>
 
-            <YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange} />
+            <YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange}/>
 
             <div className="filter-section">
-                <h3 onClick={() => toggleFilterVisibility('heroes')} style={{ cursor: 'pointer' }}>
+                <h3 onClick={() => toggleFilterVisibility('heroes')} style={{cursor: 'pointer'}}>
                     Герой
-                    <FontAwesomeIcon icon={filterVisibility.heroes ? faChevronUp : faChevronDown} className="icon" />
+                    <FontAwesomeIcon icon={filterVisibility.heroes ? faChevronUp : faChevronDown} className="icon"/>
                 </h3>
                 {filterVisibility.heroes && (
                     <div className="filters">
@@ -185,9 +183,9 @@ const Sidebar = ({ onFilterChange })  => {
                                 <label htmlFor={`hero-${index}`}>{hero}</label>
                             </div>
                         ))}
-                        {heroes.length > defaultDisplayCount && (
+                        {heroes.length > defaultDisplayCount && displayCount.heroes === defaultDisplayCount && (
                             <button onClick={() => handleShowMore('heroes')} className="show-more">
-                                <FontAwesomeIcon icon={faPlus} /> {displayCount.heroes === defaultDisplayCount ? 'Показать все' : 'Скрыть'}
+                                <FontAwesomeIcon icon={faPlus} /> Показать все
                             </button>
                         )}
                     </div>
