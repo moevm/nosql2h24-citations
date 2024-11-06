@@ -54,7 +54,16 @@ export const filterAndSearchQuotes = async (req: Request, res: Response) => {
     }
 
     if (keyword) {
-        filter.quote = new RegExp(keyword as string, 'i');
+        const escapedKeyword = keyword
+            .toString()
+            .replace(/[.*+?^${}(),!;:"'|[\]\\\-]/g, '');
+
+        const pattern = escapedKeyword
+            .split(/\s+/)
+            .map(word => word.replace(/\s/g, ''))
+            .join('[^a-zA-Zа-яА-Я]*');
+
+        filter.quote = new RegExp(pattern, 'i');
     }
 
     try {

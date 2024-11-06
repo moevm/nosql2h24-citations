@@ -1,14 +1,14 @@
 import React from 'react';
-import '../css/CitationCard.css'; // Подключаем стили
+import '../css/CitationCard.css';
 
-const CitationCard = () => {
+const CitationCard = ({ quote, authorName, book, hero }) => {
     return (
         <div className="citation-card">
-            <p className="citation-text">Спокойно, Маша, я - Дубровский.</p>
+            <p className="citation-text">{quote}</p>
             <div className="citation-details">
-                <span className="hero">© Дубровский</span>
-                <span className="book">Дубровский</span>
-                <span className="author">А.С. Пушкин</span>
+                <span className="hero">© {hero || "Слова автора"}</span>
+                <span className="book">{book.name} </span>
+                <span className="author">{authorName}</span>
             </div>
         </div>
     );

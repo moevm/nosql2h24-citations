@@ -4,6 +4,8 @@
     color: #E85A4F;
     margin-bottom: 16px;
     margin-top: 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .filters {
@@ -14,18 +16,18 @@
 
 .filter {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .filter input[type="checkbox"] {
     appearance: none;
-    width: 18px;
-    height: 18px;
+    width: 18px !important;
+    height: 18px !important;
     border: 2px solid #E85A4F;
     border-radius: 2px;
-    margin-right: 8px;
     position: relative;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .filter input[type="checkbox"]:checked {
@@ -45,4 +47,25 @@
 .filter label {
     font-size: 16px;
     cursor: pointer;
+    margin-left: 8px;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.icon {
+    margin-left: 8px;
+}
+.show-more {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: none;
+    color: #E85A4F;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 16px;
+}
+.show-more:hover {
+    color: #d9534f;
 }
