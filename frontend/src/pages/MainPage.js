@@ -81,7 +81,7 @@ const MainPage = () => {
                     <Sidebar onFilterChange={updateFilters}/>
                 </div>
                 <div className="content">
-                    <SearchBar onSearch={handleSearch}/>
+                    <SearchBar onSearch={handleSearch} placeholder="Поиск по тексту цитаты"/>
                     {quotes.map((quote, index) => (
                         <CitationCard key={index} {...quote} />
                     ))}

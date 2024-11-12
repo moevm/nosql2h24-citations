@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/SearchBar.css';
 
-const SearchBar =  ({ onSearch }) => {
+const SearchBar =  ({ onSearch, placeholder = "Поиск..." }) => {
     const handleInputChange = (e) => {
         const keyword = e.target.value;
         onSearch(keyword);
@@ -11,7 +11,7 @@ const SearchBar =  ({ onSearch }) => {
             <img className="search-icon" src="./search_icon.svg" alt="search_icon"/>
             <input
                 type="text"
-                placeholder="Поиск по тексту цитат"
+                placeholder={placeholder}
                 className="search-input"
                 onChange={handleInputChange}
             />
