@@ -4,13 +4,13 @@ RUN apk --no-cache add \
     nodejs \
     npm
 
-WORKDIR src
+WORKDIR server
 
-COPY src/package.json .
+COPY server/package.json .
 
 RUN npm install
 
-COPY src .
+COPY server/ .
 
 RUN npm install
 
