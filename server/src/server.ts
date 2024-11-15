@@ -4,6 +4,7 @@ import cors from 'cors';
 import { connectToDatabase } from './config/database';
 import quotesRoutes from './routes/quotesRoutes';
 import filtersRoutes from './routes/filtersRoutes';
+import authorsRoutes from "./routes/authorsRoutes";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ connectToDatabase();
 
 app.use('/quotes', quotesRoutes);
 app.use('/filters', filtersRoutes);
+app.use('/authors', authorsRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
