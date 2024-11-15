@@ -2,13 +2,13 @@ import { Request, Response } from 'express';
 import Quote from '../models/Quote';
 
 export const getBooks = async (req: Request, res: Response) => {
-    const { authorsNames, bookYearStart, bookYearEnd, keyword } = req.query;
+    const { authorNames, bookYearStart, bookYearEnd, keyword } = req.query;
 
     try {
         const filter: any = {};
 
-        if (authorsNames) {
-            const authorsArray = Array.isArray(authorsNames) ? authorsNames : [authorsNames];
+        if (authorNames) {
+            const authorsArray = Array.isArray(authorNames) ? authorNames : [authorNames];
             filter.authorName = { $in: authorsArray };
         }
 
@@ -22,7 +22,6 @@ export const getBooks = async (req: Request, res: Response) => {
             filter['book.name'] = new RegExp(keyword as string, 'i');
         }
 
-        console.log(filter)
         const books = await Quote.distinct('book.name', filter);
 
         res.json(books);
