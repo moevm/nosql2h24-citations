@@ -1,0 +1,30 @@
+.hero-card {
+    padding: 32px;
+    background-color: transparent;
+    border: 2px solid #D8C3A5;
+    border-radius: 5px;
+    margin-bottom: 16px;
+}
+
+.hero-text {
+    font-size: 24px;
+    margin-bottom: 16px;
+    margin-top: 0;
+    color: #383838;
+}
+
+.hero-details {
+    display: flex;
+    gap: 24px;
+    font-size: 20px;
+    color: #383838;
+}
+
+.citation-details span {
+    display: inline-block;
+}
+
+.book,
+.author {
+    color: #383838;
+}
