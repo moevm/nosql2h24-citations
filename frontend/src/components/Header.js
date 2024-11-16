@@ -10,7 +10,7 @@ const Header = () => {
             <nav className="nav-menu">
                 <a href="#">Главная</a>
                 <a href="#">Авторы</a>
-                <a href="#">Произведения</a>
+                <a href="/search_book">Произведения</a>
                 <a href="/search_hero">Герои</a>
                 <a href="#">Статистика</a>
             </nav>
