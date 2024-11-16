@@ -3,6 +3,8 @@ import Quote from '../models/Quote';
 
 export const getHeroes = async (req: Request, res: Response) => {
     const { authorNames, bookNames, bookYearStart, bookYearEnd, keyword } = req.query;
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
 
     try {
         const filter: any = {};
@@ -29,6 +31,16 @@ export const getHeroes = async (req: Request, res: Response) => {
 
         const heroes = await Quote.distinct('hero', filter);
 
+        const totalHeroes = heroes.length;
+        const paginatedHeroes = heroes.slice((page - 1) * pageSize, page * pageSize);
+
+        res.json({
+            data: paginatedHeroes,
+            page,
+            pageSize,
+            totalHeroes,
+            totalPages: Math.ceil(totalHeroes / pageSize)
+        });
         res.json(heroes);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching heroes', error: err });

@@ -25,8 +25,8 @@ connectToDatabase();
 app.use('/quotes', quotesRoutes);
 app.use('/filters', filtersRoutes);
 app.use('/authors', authorsRoutes);
-app.use('/heroes', heroesRoutes);
 app.use('/books', booksRoutes);
+app.use('/heroes', heroesRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
