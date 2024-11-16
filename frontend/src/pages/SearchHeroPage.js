@@ -32,7 +32,7 @@ const SearchHeroPage = () => {
         if (searchTerm) queryParams.append('keyword', searchTerm);
 
         queryParams.append('page', page.toString());
-        queryParams.append('pageSize', '5');
+        queryParams.append('pageSize', '20');
 
         try {
             const response = await fetch(`http://localhost:3000/heroes/?${queryParams.toString()}`);
@@ -41,7 +41,7 @@ const SearchHeroPage = () => {
                 throw new Error('Ошибка при поиске авторов');
             }
             const data = await response.json();
-            setHeroes(data);
+            setHeroes(data.data);
             setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error.message);
@@ -78,7 +78,7 @@ const SearchHeroPage = () => {
                 <div className="heroes-list">
                     {heroes.map((hero, index) => (
                         <div key={index} className="hero-item">
-                            <HeroCard hero={hero} authorName={""} book={""}/>
+                            <HeroCard {...hero}/>
                         </div>
                     ))}
                 </div>
