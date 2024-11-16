@@ -29,19 +29,20 @@ const Sidebar = ({onFilterChange}) => {
     useEffect(() => {
         const fetchFilters = async () => {
             try {
-                const authorsResponse = await fetch('http://localhost:3000/filters/authors');
+                const authorsResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/authors`);
+                console.log(`${process.env.REACT_APP_API_URL}/filters/authors`, authorsResponse, "DDDD")
                 const authorsData = await authorsResponse.json();
                 setAuthors(authorsData);
 
-                const booksResponse = await fetch('http://localhost:3000/filters/books');
+                const booksResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/books`);
                 const booksData = await booksResponse.json();
                 setBooks(booksData);
 
-                const heroesResponse = await fetch('http://localhost:3000/filters/heroes');
+                const heroesResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/heroes`);
                 const heroesData = await heroesResponse.json();
                 setHeroes(heroesData);
 
-                const yearsResponse = await fetch('http://localhost:3000/filters/years');
+                const yearsResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/years`);
                 const yearsData = await yearsResponse.json();
                 setYearRange([yearsData.minYear, yearsData.maxYear]);
             } catch (error) {

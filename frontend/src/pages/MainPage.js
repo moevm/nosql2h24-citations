@@ -46,7 +46,7 @@ const MainPage = () => {
         queryParams.append('pageSize', '20');
 
         try {
-            const response = await fetch(`http://localhost:3000/quotes/search?${queryParams.toString()}`);
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/quotes/search?${queryParams.toString()}`);
             if (!response.ok) {
                 throw new Error('Ошибка при поиске и фильтрации цитат');
             }
