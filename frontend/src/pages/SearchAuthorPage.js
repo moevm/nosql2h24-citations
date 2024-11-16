@@ -17,19 +17,14 @@ const SearchAuthorPage = () => {
         queryParams.append('pageSize', '20');
 
         try {
-            // const response = await fetch(`http://localhost:3000/authors/search?${queryParams.toString()}`);
+            const response = await fetch(`http://localhost:3000/authors/?${queryParams.toString()}`);
 
-            //Временное решение
-            const response = await fetch(`http://localhost:3000/filters/authors`);
             if (!response.ok) {
                 throw new Error('Ошибка при поиске авторов');
             }
             const data = await response.json();
-            // setAuthors(data.data);
-            // setTotalPages(data.totalPages);
-
-            //временное решение
             setAuthors(data);
+            setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error.message);
         }
