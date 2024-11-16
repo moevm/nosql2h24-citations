@@ -11,7 +11,7 @@ const Header = () => {
                 <a href="#">Главная</a>
                 <a href="#">Авторы</a>
                 <a href="#">Произведения</a>
-                <a href="#">Герои</a>
+                <a href="/search_hero">Герои</a>
                 <a href="#">Статистика</a>
             </nav>
         </header>
