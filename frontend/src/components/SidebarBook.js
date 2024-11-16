@@ -74,13 +74,14 @@ const SidebarBook = ({onFilterChange}) => {
     };
 
     const handleShowMore = (category) => {
-        setDisplayCount(prev => ({
+        const itemsLength =  category === 'authors' ? authors.length : 0;
+        setDisplayCount((prev) => ({
             ...prev,
-            [category]: prev[category] === defaultDisplayCount ? ( category === 'authors' ? authors.length : 0) : defaultDisplayCount
+            [category]: prev[category] === defaultDisplayCount ? itemsLength : defaultDisplayCount,
         }));
     };
 
-
+console.log(authors)
     return (
         <div className="sidebar">
             <div className="filter-section">

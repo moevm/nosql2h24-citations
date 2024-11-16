@@ -12,7 +12,7 @@ const SearchBookPage = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [filters, setFilters] = useState({
         authorName: [],
-        bookName: [],
+        bookYear: [],
     });
 
     const fetchHeroes = async () => {
@@ -21,11 +21,6 @@ const SearchBookPage = () => {
         if (filters.authorName.length) {
             filters.authorName.forEach((author) => {
                 queryParams.append('authorNames', author);
-            });
-        }
-        if (filters.bookName.length) {
-            filters.bookName.forEach((book) => {
-                queryParams.append('bookNames', book);
             });
         }
 

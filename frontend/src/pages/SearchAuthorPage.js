@@ -23,7 +23,7 @@ const SearchAuthorPage = () => {
                 throw new Error('Ошибка при поиске авторов');
             }
             const data = await response.json();
-            setAuthors(data);
+            setAuthors(data.data);
             setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error.message);
