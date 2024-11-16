@@ -24,7 +24,26 @@ export const getBooks = async (req: Request, res: Response) => {
             filter['book.name'] = new RegExp(keyword as string, 'i');
         }
 
-        const books = await Quote.distinct('book.name', filter);
+        const books = await Quote.aggregate([
+            { $match: filter },
+            {
+                $group: {
+                    _id: {
+                        name: "$book.name",
+                        year: "$book.year",
+                        authorName: "$authorName"
+                    }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    name: "$_id.name",
+                    year: "$_id.year",
+                    authorName: "$_id.authorName"
+                }
+            }
+        ]);
 
         const totalBooks = books.length;
         const paginatedBooks = books.slice((page - 1) * pageSize, page * pageSize);
