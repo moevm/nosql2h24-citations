@@ -55,6 +55,7 @@ export const getBooks = async (req: Request, res: Response) => {
             totalBooks,
             totalPages: Math.ceil(totalBooks / pageSize)
         });
+        res.json(books);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching books', error: err });
     }

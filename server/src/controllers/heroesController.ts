@@ -58,6 +58,7 @@ export const getHeroes = async (req: Request, res: Response) => {
             totalHeroes,
             totalPages: Math.ceil(totalHeroes / pageSize)
         });
+        res.json(heroes);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching heroes', error: err });
     }
