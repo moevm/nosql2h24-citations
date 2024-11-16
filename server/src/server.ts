@@ -4,6 +4,7 @@ import cors from 'cors';
 import { connectToDatabase } from './config/database';
 import quotesRoutes from './routes/quotesRoutes';
 import filtersRoutes from './routes/filtersRoutes';
+import authorsRoutes from "./routes/authorsRoutes";
 import booksRoutes from "./routes/booksRoutes";
 
 dotenv.config();
@@ -22,6 +23,7 @@ connectToDatabase();
 
 app.use('/quotes', quotesRoutes);
 app.use('/filters', filtersRoutes);
+app.use('/authors', authorsRoutes);
 app.use('/books', booksRoutes);
 
 app.listen(port, () => {
