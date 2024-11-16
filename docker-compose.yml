@@ -23,6 +23,7 @@ services:
       - ${MONGO_INITDB_PORT}:${MONGO_INITDB_PORT}
     volumes:
        - db-data:/data/db
+       - ./init.js:/init.js
     networks:
       - docker_network
   client:
