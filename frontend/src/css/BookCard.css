@@ -1,0 +1,30 @@
+.book-card {
+    padding: 32px;
+    background-color: transparent;
+    border: 2px solid #D8C3A5;
+    border-radius: 5px;
+    margin-bottom: 16px;
+}
+
+.book-text {
+    font-size: 24px;
+    margin-bottom: 16px;
+    margin-top: 0;
+    color: #383838;
+}
+
+.book-details {
+    display: flex;
+    gap: 24px;
+    font-size: 20px;
+    color: #383838;
+}
+
+.book-details span {
+    display: inline-block;
+}
+
+.year,
+.author {
+    color: #383838;
+}
