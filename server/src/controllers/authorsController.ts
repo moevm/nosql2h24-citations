@@ -25,7 +25,6 @@ export const getAuthors = async (req: Request, res: Response) => {
             totalAuthors,
             totalPages: Math.ceil(totalAuthors / pageSize)
         });
-        res.json(authors);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching authors', error: err });
     }

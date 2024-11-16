@@ -5,8 +5,8 @@ import { connectToDatabase } from './config/database';
 import quotesRoutes from './routes/quotesRoutes';
 import filtersRoutes from './routes/filtersRoutes';
 import authorsRoutes from "./routes/authorsRoutes";
-import heroesRoutes from "./routes/heroesRoutes";
 import booksRoutes from "./routes/booksRoutes";
+import heroesRoutes from "./routes/heroesRoutes";
 
 dotenv.config();
 
