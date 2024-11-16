@@ -34,6 +34,8 @@ services:
       - ./frontend:/app
     stdin_open: true
     tty: true
+    networks:
+      - docker_network
 
 volumes:
   db-data:
