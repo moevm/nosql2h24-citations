@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   app:
     container_name: app
@@ -25,6 +25,15 @@ services:
        - db-data:/data/db
     networks:
       - docker_network
+  client:
+    build: ./frontend
+    container_name: client_frontend
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./frontend:/app
+    stdin_open: true
+    tty: true
 
 volumes:
   db-data:
