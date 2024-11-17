@@ -11,7 +11,7 @@ services:
     networks:
       - docker_network
   db:
-    container_name: mongo_db
+    container_name: db
     env_file:
       - .env
     environment:
