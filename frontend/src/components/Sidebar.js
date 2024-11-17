@@ -30,7 +30,6 @@ const Sidebar = ({onFilterChange}) => {
         const fetchFilters = async () => {
             try {
                 const authorsResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/authors`);
-                console.log(`${process.env.REACT_APP_API_URL}/filters/authors`, authorsResponse, "DDDD")
                 const authorsData = await authorsResponse.json();
                 setAuthors(authorsData);
 
