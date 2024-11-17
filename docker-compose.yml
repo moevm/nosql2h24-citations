@@ -18,9 +18,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     image: mongo:5.0.25
-    command: mongod --port ${MONGO_INITDB_PORT}
-    ports:
-      - ${MONGO_INITDB_PORT}:${MONGO_INITDB_PORT}
+    command: mongod --port 27017
     volumes:
        - db-data:/data/db
        - ./init.js:/init.js
