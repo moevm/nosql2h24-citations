@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     networks:
       - docker_network
   db:
@@ -27,7 +27,7 @@ services:
     build: ./frontend
     container_name: client_frontend
     ports:
-      - "3001:3000"
+      - "127.0.0.1:3001:3000"
     volumes:
       - ./frontend:/app:ro
     stdin_open: true
