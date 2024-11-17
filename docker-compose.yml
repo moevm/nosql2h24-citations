@@ -29,7 +29,7 @@ services:
     ports:
       - "3001:3000"
     volumes:
-      - ./frontend:/app
+      - ./frontend:/app:ro
     stdin_open: true
     tty: true
     networks:
