@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const mongoUri = process.env.MONGODB_URI || 'mongodb://classic:password@db:27017/?directConnection=true&serverSelectionTimeoutMS=2000&authSource=admin';
+const mongoUri = process.env.MONGODB_URI || 'mongodb://classic:password@db:27017/quotes?directConnection=true&serverSelectionTimeoutMS=2000&authSource=admin';
 
 export const connectToDatabase = async () => {
     try {

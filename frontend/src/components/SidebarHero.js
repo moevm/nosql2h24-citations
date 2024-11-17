@@ -1,49 +1,35 @@
 import React, {useEffect, useState} from 'react';
 import '../css/Sidebar.css';
-import YearSlider from "./YearSlider";
 import {faChevronDown, faChevronUp, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const Sidebar = ({onFilterChange}) => {
+const SidebarHero = ({onFilterChange}) => {
     const [authors, setAuthors] = useState([]);
     const [books, setBooks] = useState([]);
-    const [heroes, setHeroes] = useState([]);
     const [selectedAuthors, setSelectedAuthors] = useState([]);
     const [selectedBooks, setSelectedBooks] = useState([]);
-    const [selectedHeroes, setSelectedHeroes] = useState([]);
-    const [yearRange, setYearRange] = useState([]);
 
     const defaultDisplayCount = 10;
     const [displayCount, setDisplayCount] = useState({
         books: defaultDisplayCount,
         authors: defaultDisplayCount,
-        heroes: defaultDisplayCount,
     });
 
     const [filterVisibility, setFilterVisibility] = useState({
         authors: true,
         books: true,
-        heroes: true,
     });
 
     useEffect(() => {
         const fetchFilters = async () => {
             try {
-                const authorsResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/authors`);
+                const authorsResponse = await fetch('http://localhost:3000/filters/authors');
                 const authorsData = await authorsResponse.json();
                 setAuthors(authorsData);
 
-                const booksResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/books`);
+                const booksResponse = await fetch('http://localhost:3000/filters/books');
                 const booksData = await booksResponse.json();
                 setBooks(booksData);
-
-                const heroesResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/heroes`);
-                const heroesData = await heroesResponse.json();
-                setHeroes(heroesData);
-
-                const yearsResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/years`);
-                const yearsData = await yearsResponse.json();
-                setYearRange([yearsData.minYear, yearsData.maxYear]);
             } catch (error) {
                 console.error('Error fetching filter data:', error);
             }
@@ -66,11 +52,6 @@ const Sidebar = ({onFilterChange}) => {
                 setSelectedBooks(updatedSelection);
                 onFilterChange({bookName: updatedSelection});
                 break;
-            case 'heroName':
-                updatedSelection = toggleSelection(selectedHeroes, value);
-                setSelectedHeroes(updatedSelection);
-                onFilterChange({heroName: updatedSelection});
-                break;
             default:
                 break;
         }
@@ -80,10 +61,6 @@ const Sidebar = ({onFilterChange}) => {
         return array.includes(value) ? array.filter(item => item !== value) : [...array, value];
     };
 
-    const handleYearRangeChange = (newRange) => {
-        // setYearRange(newRange);
-        onFilterChange({bookYear: newRange});
-    };
 
 
     const toggleFilterVisibility = (filterName) => {
@@ -100,9 +77,10 @@ const Sidebar = ({onFilterChange}) => {
     };
 
     const handleShowMore = (category) => {
-        setDisplayCount(prev => ({
+        const itemsLength = category === 'books' ? books.length : category === 'authors' ? authors.length : 0;
+        setDisplayCount((prev) => ({
             ...prev,
-            [category]: prev[category] === defaultDisplayCount ? (category === 'books' ? books.length : category === 'authors' ? authors.length : heroes.length) : defaultDisplayCount
+            [category]: prev[category] === defaultDisplayCount ? itemsLength : defaultDisplayCount,
         }));
     };
 
@@ -162,37 +140,8 @@ const Sidebar = ({onFilterChange}) => {
                     </div>
                 )}
             </div>
-
-            <YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange}/>
-
-            <div className="filter-section">
-                <h3 onClick={() => toggleFilterVisibility('heroes')} style={{cursor: 'pointer'}}>
-                    Герой
-                    <FontAwesomeIcon icon={filterVisibility.heroes ? faChevronUp : faChevronDown} className="icon"/>
-                </h3>
-                {filterVisibility.heroes && (
-                    <div className="filters">
-                        {heroes.slice(0, displayCount.heroes).map((hero, index) => (
-                            <div className="filter" key={index}>
-                                <input
-                                    type="checkbox"
-                                    id={`hero-${index}`}
-                                    onChange={() => handleCheckboxChange('heroName', hero)}
-                                    checked={selectedHeroes.includes(hero)}
-                                />
-                                <label htmlFor={`hero-${index}`}>{hero}</label>
-                            </div>
-                        ))}
-                        {heroes.length > defaultDisplayCount && displayCount.heroes === defaultDisplayCount && (
-                            <button onClick={() => handleShowMore('heroes')} className="show-more">
-                                <FontAwesomeIcon icon={faPlus} /> Показать все
-                            </button>
-                        )}
-                    </div>
-                )}
-            </div>
         </div>
     );
 };
 
-export default Sidebar;
+export default SidebarHero;
