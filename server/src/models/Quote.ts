@@ -7,7 +7,7 @@ interface IQuote extends Document {
         name: string;
         year: number;
     };
-    heroName: string;
+    hero: string;
 }
 
 const QuoteSchema: Schema = new Schema({
@@ -17,7 +17,7 @@ const QuoteSchema: Schema = new Schema({
         name: { type: String, required: true },
         year: { type: Number, required: true }
     },
-    heroName: { type: String, required: false }
+    hero: { type: String, required: false }
 });
 
 export default mongoose.model<IQuote>('Quote', QuoteSchema);

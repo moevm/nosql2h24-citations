@@ -10,7 +10,7 @@ const quoteSchema = Joi.object({
         name: Joi.string().required(),
         year: Joi.number().integer().required()
     }).required(),
-    heroName: Joi.string().optional(),
+    hero: Joi.string().optional(),
     quote: Joi.string().required()
 });
 
