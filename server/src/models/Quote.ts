@@ -17,7 +17,7 @@ const QuoteSchema: Schema = new Schema({
         name: { type: String, required: true },
         year: { type: Number, required: true }
     },
-    heroName: { type: String, required: true }
+    heroName: { type: String, required: false }
 });
 
 export default mongoose.model<IQuote>('Quote', QuoteSchema);
