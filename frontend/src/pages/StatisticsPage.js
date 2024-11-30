@@ -3,6 +3,8 @@ import YearSlider from "../components/YearSlider";
 import "../css/StatisticsPage.css"
 import Chart from "./Chart";
 import Select from "react-select";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faFileImport, faFileExport } from "@fortawesome/free-solid-svg-icons";
 
 const StatisticsPage = () => {
     const [yearRange, setYearRange] = useState([]);
@@ -16,6 +18,7 @@ const StatisticsPage = () => {
         { value: "heroes", label: "По героям" },
         { value: "quotes", label: "По цитатам" },
     ];
+
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
@@ -50,21 +53,6 @@ const StatisticsPage = () => {
         }),
     };
 
-
-    useEffect(() => {
-        const fetchFilters = async () => {
-            try {
-                const yearsResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/years`);
-                const yearsData = await yearsResponse.json();
-                setYearRange([yearsData.minYear, yearsData.maxYear]);
-            } catch (error) {
-                console.error("Ошибка при загрузке диапазона лет:", error);
-            }
-        };
-
-        fetchFilters();
-    }, []);
-
     const fetchStatistics = async () => {
         const endpoints = {
             authors: "/authors",
@@ -74,15 +62,15 @@ const StatisticsPage = () => {
         };
 
         const endpoint = endpoints[viewMode];
-
         if (!endpoint) return;
 
         try {
             const queryParams = new URLSearchParams();
             if (filters.bookYear.length) {
-                queryParams.append('bookYearStart', filters.bookYear[0]);
-                queryParams.append('bookYearEnd', filters.bookYear[1]);
+                queryParams.append("bookYearStart", filters.bookYear[0]);
+                queryParams.append("bookYearEnd", filters.bookYear[1]);
             }
+
             const response = await fetch(
                 `${process.env.REACT_APP_API_URL}/statistics${endpoint}?${queryParams.toString()}`
             );
@@ -96,13 +84,76 @@ const StatisticsPage = () => {
     };
 
     useEffect(() => {
-        if (yearRange.length > 0) {
+        if (yearRange.length > 0 || viewMode !== "quotes") {
             fetchStatistics();
         }
     }, [filters, viewMode]);
 
+    useEffect(() => {
+        const fetchFilters = async () => {
+            try {
+                const yearsResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/years`);
+                const yearsData = await yearsResponse.json();
+                setYearRange([yearsData.minYear, yearsData.maxYear]);
+                setFilters({ bookYear: [yearsData.minYear, yearsData.maxYear] });
+            } catch (error) {
+                console.error("Ошибка при загрузке диапазона лет:", error);
+            }
+        };
+
+        fetchFilters();
+    }, []);
+
     const handleYearRangeChange = (newRange) => {
         setFilters((prevFilters) => ({ ...prevFilters, bookYear: newRange }));
+    };
+
+    const handleImport = async () => {
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = ".json";
+        fileInput.onchange = async (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append("file", file);
+
+                try {
+                    const response = await fetch(`${process.env.REACT_APP_API_URL}/data/import`, {
+                        method: "POST",
+                        body: formData,
+                    });
+                    const result = await response.json();
+                    if (response.ok) {
+                        alert(`Импортировано успешно: ${result.count} записей`);
+                        fetchStatistics();
+                    } else {
+                        alert(`Ошибка импорта: ${result.message}`);
+                    }
+                } catch (error) {
+                    console.error("Ошибка импорта:", error);
+                }
+            }
+        };
+        fileInput.click();
+    };
+
+    const handleExport = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/data/export`);
+            if (response.ok) {
+                const blob = await response.blob();
+                const link = document.createElement("a");
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "quotes.json";
+                link.click();
+                alert("Данные успешно экспортированы!");
+            } else {
+                alert("Ошибка экспорта данных");
+            }
+        } catch (error) {
+            console.error("Ошибка экспорта:", error);
+        }
     };
 
     return (
@@ -110,7 +161,7 @@ const StatisticsPage = () => {
             <div className="statistics-content">
                 {viewMode === "quotes" && (
                     <div className="slider-container">
-                        <YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange} />
+                        <YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange}/>
                     </div>
                 )}
                 <div className="chart-view-mode">
@@ -124,12 +175,18 @@ const StatisticsPage = () => {
                             isSearchable={false}
                         />
                     </div>
-                    <Chart key={viewMode} data={statistics} />
+                    <Chart key={viewMode} data={statistics}/>
                 </div>
             </div>
             <div className="statistics-buttons">
-                <button className="import-button">Импорт</button>
-                <button className="export-button">Экспорт</button>
+                <button className="import-button" onClick={handleImport}>
+                    <FontAwesomeIcon icon={faFileImport}/>
+                    Импорт
+                </button>
+                <button className="export-button" onClick={handleExport}>
+                    <FontAwesomeIcon icon={faFileExport}/>
+                    Экспорт
+                </button>
             </div>
         </div>
     );
