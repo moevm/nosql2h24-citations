@@ -7,6 +7,8 @@ import filtersRoutes from './routes/filtersRoutes';
 import authorsRoutes from "./routes/authorsRoutes";
 import booksRoutes from "./routes/booksRoutes";
 import heroesRoutes from "./routes/heroesRoutes";
+import importExportRoutes from "./routes/importExportRoutes";
+import statisticsRoutes from "./routes/statisticsRoutes";
 
 dotenv.config();
 
@@ -19,6 +21,8 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+app.use(express.json());
+
 
 connectToDatabase();
 
@@ -27,6 +31,8 @@ app.use('/filters', filtersRoutes);
 app.use('/authors', authorsRoutes);
 app.use('/books', booksRoutes);
 app.use('/heroes', heroesRoutes);
+app.use('/data', importExportRoutes);
+app.use('/statistics', statisticsRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
