@@ -10,7 +10,7 @@ const quoteSchema = Joi.object({
         name: Joi.string().required(),
         year: Joi.number().integer().required()
     }).required(),
-    hero: Joi.string().optional(),
+    hero: Joi.string().optional().allow(null),
     quote: Joi.string().required()
 });
 
@@ -41,13 +41,18 @@ export const importQuotes = async (req: Request, res: Response): Promise<void> =
             return;
         }
 
-        const validationErrors = validateQuotes(quotes);
+        const sanitizedQuotes = quotes.map((quote) => {
+            const { _id, __v, ...sanitizedQuote } = quote;
+            return sanitizedQuote;
+        });
+
+        const validationErrors = validateQuotes(sanitizedQuotes);
         if (validationErrors.length > 0) {
             res.status(400).json({ message: 'Некорректный формат данных', errors: validationErrors });
             return;
         }
 
-        await Quote.insertMany(quotes);
+        await Quote.insertMany(sanitizedQuotes);
 
         fs.unlinkSync(filePath);
 
