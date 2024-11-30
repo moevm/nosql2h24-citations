@@ -1,0 +1,69 @@
+.chart-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fdf6e3;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+    height: 300px;
+    border-left: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    position: relative;
+}
+
+.y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    left: -40px;
+    height: 100%;
+}
+
+.y-label {
+    font-size: 12px;
+    color: #444;
+    text-align: right;
+}
+
+.chart-content {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    overflow-x: auto;
+}
+
+.chart-bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    width: 30px;
+}
+
+.chart-bar {
+    width: 100%;
+    background-color: #ff6f61;
+    transition: height 0.3s ease-in-out;
+    border-radius: 5px 5px 0 0;
+}
+
+.x-label {
+    font-size: 10px;
+    color: #444;
+    text-align: center;
+    margin-top: 5px;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+}

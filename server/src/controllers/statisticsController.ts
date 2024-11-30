@@ -5,8 +5,7 @@ export const getStatisticsByAuthors = async (req: Request, res: Response): Promi
     try {
         const stats = await Quote.aggregate([
             { $group: { _id: '$authorName', count: { $sum: 1 } } },
-            { $project: { authorName: '$_id', count: 1, _id: 0 } }, // Переименовываем _id в authorName
-            { $sort: { count: -1 } } // Сортируем по количеству цитат
+            { $project: { x: '$_id', count: 1, _id: 0 } },
         ]);
 
         res.json({ data: stats });
@@ -19,8 +18,7 @@ export const getStatisticsByBooks = async (req: Request, res: Response): Promise
     try {
         const stats = await Quote.aggregate([
             { $group: { _id: '$book.name', count: { $sum: 1 } } },
-            { $project: { bookName: '$_id', count: 1, _id: 0 } }, // Переименовываем _id в bookName
-            { $sort: { count: -1 } }
+            { $project: { x: '$_id', count: 1, _id: 0 } },
         ]);
 
         res.json({ data: stats });
@@ -33,8 +31,7 @@ export const getStatisticsByHeroes = async (req: Request, res: Response): Promis
     try {
         const stats = await Quote.aggregate([
             { $group: { _id: '$hero', count: { $sum: 1 } } },
-            { $project: { hero: '$_id', count: 1, _id: 0 } },
-            { $sort: { count: -1 } }
+            { $project: { x: '$_id', count: 1, _id: 0 } },
         ]);
 
         res.json({ data: stats });
@@ -54,8 +51,8 @@ export const getStatisticsByYears = async (req: Request, res: Response): Promise
         const stats = await Quote.aggregate([
             { $match: filter },
             { $group: { _id: '$book.year', count: { $sum: 1 } } },
-            { $project: { year: '$_id', count: 1, _id: 0 } },
-            { $sort: { count: -1 } }
+            { $project: { x: '$_id', count: 1, _id: 0 } },
+            { $sort: { x: 1 } }
         ]);
 
         res.json({ data: stats });
