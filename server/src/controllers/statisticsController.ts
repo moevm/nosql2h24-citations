@@ -30,6 +30,7 @@ export const getStatisticsByBooks = async (req: Request, res: Response): Promise
 export const getStatisticsByHeroes = async (req: Request, res: Response): Promise<void> => {
     try {
         const stats = await Quote.aggregate([
+            { $match: { hero: { $ne: null } } },
             { $group: { _id: '$hero', count: { $sum: 1 } } },
             { $project: { x: '$_id', count: 1, _id: 0 } },
         ]);

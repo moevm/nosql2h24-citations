@@ -1,5 +1,4 @@
 import React from "react";
-import "../css/Chart.css";
 import {Bar} from "react-chartjs-2";
 import {
     Chart as ChartJS,
@@ -58,7 +57,6 @@ const Chart = ({ data }) => {
                     font: {
                         size: 16,
                     },
-                    rotation: 180,
                 },
             },
             y: {
@@ -72,7 +70,7 @@ const Chart = ({ data }) => {
 
                 border: {
                     width: 5,
-                    color: "#D8C3A5", // Цвет оси X
+                    color: "#D8C3A5",
                 },
                 offset: true,
                 ticks: {
@@ -84,8 +82,10 @@ const Chart = ({ data }) => {
         },
     };
 
+    console.log(barChartData)
+
     return (
-        <div style={{ width: "100%", height: "400px" }}>
+        <div style={{ width: "100%", height: "70vh" }}>
             <Bar data={barChartData} options={options} />
         </div>
     );
