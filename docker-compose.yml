@@ -20,6 +20,7 @@ services:
     build: ./db
     volumes:
        - db-data:/data/db
+    restart: always
     networks:
       - docker_network
   client:
