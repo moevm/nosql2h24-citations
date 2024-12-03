@@ -1,4 +1,6 @@
-db = connect("mongodb://classic:password@db:27017/quotes?directConnection=true&serverSelectionTimeoutMS=2000&authSource=admin")
+db = db.getSiblingDB('admin')
+db.auth('classic', 'password')
+db = db.getSiblingDB("quotes")
 db.createCollection('quotes')
 db.quotes.insertMany([
   {
