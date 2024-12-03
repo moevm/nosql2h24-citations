@@ -12,14 +12,15 @@ services:
       - docker_network
   db:
     container_name: db
+    build : ./db
     env_file:
       - .env
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-    build: ./db
+    image: mongodb/mongodb-community-server:6.0-ubi8
     volumes:
-       - db-data:/data/db
+       - db-data-citation:/data/db
     restart: always
     networks:
       - docker_network
@@ -36,6 +37,6 @@ services:
       - docker_network
 
 volumes:
-  db-data:
+  db-data-citation:
 networks:
   docker_network:
