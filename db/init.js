@@ -1,4 +1,3 @@
-print('Start #################################################################');
 db = db.getSiblingDB('admin')
 db.auth('classic', 'password')
 db = db.getSiblingDB("quotes")
