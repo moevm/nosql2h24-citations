@@ -9,6 +9,10 @@ const SearchAuthorPage = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+    useEffect(() => {
+        document.title = "Авторы";
+    }, []);
+
     const fetchAuthors = async () => {
         const queryParams = new URLSearchParams();
 

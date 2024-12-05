@@ -16,6 +16,10 @@ const SearchHeroPage = () => {
         bookName: [],
     });
 
+    useEffect(() => {
+        document.title = "Герои";
+    }, []);
+
     const fetchHeroes = async () => {
         const queryParams = new URLSearchParams();
 

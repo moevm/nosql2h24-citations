@@ -19,6 +19,10 @@ const MainPage = () => {
         const [page, setPage] = useState(1);
         const [totalPages, setTotalPages] = useState(1);
 
+    useEffect(() => {
+        document.title = "Главная страница";
+    }, []);
+
 
     const fetchFilteredAndSearchedQuotes = async () => {
         const queryParams = new URLSearchParams();

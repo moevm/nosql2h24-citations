@@ -13,6 +13,10 @@ const StatisticsPage = () => {
     const [viewMode, setViewMode] = useState("quotes");
     const [filters, setFilters] = useState({ bookYear: [] });
 
+    useEffect(() => {
+        document.title = "Статистика";
+    }, []);
+
     const options = [
         { value: "authors", label: "По авторам" },
         { value: "books", label: "По произведениям" },
