@@ -8,3 +8,10 @@
 .sidebar {
     width: 250px;
 }
+
+.count-elements {
+    font-size: 20px;
+    color: #383838;
+    margin-bottom: 4px;
+    display: flex;
+}
