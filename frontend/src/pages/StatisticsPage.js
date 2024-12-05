@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faFileImport, faFileExport } from "@fortawesome/free-solid-svg-icons";
 
 const StatisticsPage = () => {
+    const [countElements, setCountElements] = useState(0)
     const [yearRange, setYearRange] = useState([]);
     const [statistics, setStatistics] = useState([]);
     const [viewMode, setViewMode] = useState("quotes");
@@ -78,6 +79,7 @@ const StatisticsPage = () => {
 
             const result = await response.json();
             setStatistics(result.data);
+            setCountElements(result.totalElements)
         } catch (error) {
             console.error("Ошибка загрузки статистики:", error);
         }
@@ -165,15 +167,18 @@ const StatisticsPage = () => {
                     </div>
                 )}
                 <div className="chart-view-mode">
-                    <div className="view-mode-selector">
-                        <Select
-                            options={options}
-                            value={options.find((option) => option.value === viewMode)}
-                            onChange={(selectedOption) => setViewMode(selectedOption.value)}
-                            styles={customStyles}
-                            menuPlacement="auto"
-                            isSearchable={false}
-                        />
+                    <div className="view-mode-info">
+                        <span className="count-elements">Количество обрабатываемых элементов: {countElements}</span>
+                        <div className="view-mode-selector">
+                            <Select
+                                options={options}
+                                value={options.find((option) => option.value === viewMode)}
+                                onChange={(selectedOption) => setViewMode(selectedOption.value)}
+                                styles={customStyles}
+                                menuPlacement="auto"
+                                isSearchable={false}
+                            />
+                        </div>
                     </div>
                     <Chart key={viewMode} data={statistics}/>
                 </div>

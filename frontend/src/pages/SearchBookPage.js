@@ -7,6 +7,7 @@ import BookCard from "../components/BookCard";
 
 const SearchBookPage = () => {
     const [books, setBooks] = useState([]);
+    const [countElements, setCountElements] = useState(0)
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -42,6 +43,7 @@ const SearchBookPage = () => {
             }
             const data = await response.json();
             setBooks(data.data);
+            setCountElements(data.totalBooks)
             setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error.message);
@@ -75,6 +77,7 @@ const SearchBookPage = () => {
             </div>
             <div className="content">
                 <SearchBar onSearch={handleSearch} placeholder="Поиск произведения"/>
+                <span className="count-elements">Количество найденных элементов: {countElements}</span>
                 <div className="books-list">
                     {books.map((book, index) => (
                         <div key={index} className="book-item">

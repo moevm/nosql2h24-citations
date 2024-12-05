@@ -8,7 +8,9 @@ export const getStatisticsByAuthors = async (req: Request, res: Response): Promi
             { $project: { x: '$_id', count: 1, _id: 0 } },
         ]);
 
-        res.json({ data: stats });
+        const totalCount = stats.length;
+
+        res.json({ data: stats, totalElements: totalCount });
     } catch (error) {
         res.status(500).json({ message: 'Ошибка при получении статистики по авторам', error });
     }
@@ -21,7 +23,9 @@ export const getStatisticsByBooks = async (req: Request, res: Response): Promise
             { $project: { x: '$_id', count: 1, _id: 0 } },
         ]);
 
-        res.json({ data: stats });
+        const totalCount = stats.length;
+
+        res.json({ data: stats, totalElements: totalCount });
     } catch (error) {
         res.status(500).json({ message: 'Ошибка при получении статистики по книгам', error });
     }
@@ -35,7 +39,9 @@ export const getStatisticsByHeroes = async (req: Request, res: Response): Promis
             { $project: { x: '$_id', count: 1, _id: 0 } },
         ]);
 
-        res.json({ data: stats });
+        const totalCount = stats.length;
+
+        res.json({ data: stats, totalElements: totalCount });
     } catch (error) {
         res.status(500).json({ message: 'Ошибка при получении статистики по героям', error });
     }
@@ -56,7 +62,9 @@ export const getStatisticsByYears = async (req: Request, res: Response): Promise
             { $sort: { x: 1 } }
         ]);
 
-        res.json({ data: stats });
+        const totalCount = stats.length;
+
+        res.json({ data: stats, totalElements: totalCount });
     } catch (error) {
         res.status(500).json({ message: 'Ошибка при получении статистики по годам', error });
     }

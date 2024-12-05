@@ -4,6 +4,7 @@ import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
 const SearchAuthorPage = () => {
     const [authors, setAuthors] = useState([]);
+    const [countElements, setCountElements] = useState(0)
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -24,6 +25,7 @@ const SearchAuthorPage = () => {
             }
             const data = await response.json();
             setAuthors(data.data);
+            setCountElements(data.totalAuthors)
             setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error.message);
@@ -48,6 +50,7 @@ const SearchAuthorPage = () => {
     return (
         <div className="author-search-page">
             <SearchBar onSearch={handleSearch} placeholder="Поиск автора"/>
+            <span className="count-elements">Количество найденных элементов: {countElements}</span>
             <div className="authors-list">
                 {authors.map((author, index) => (
                     <div key={index} className="author-item">
@@ -56,7 +59,7 @@ const SearchAuthorPage = () => {
                 ))}
             </div>
             {totalPages > 1 && (
-                <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange} />
+                <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange}/>
             )}
         </div>
     );

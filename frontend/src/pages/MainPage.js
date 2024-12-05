@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 
 const MainPage = () => {
         const [quotes, setQuotes] = useState([]);
+        const [countElements, setCountElements] = useState(0)
         const [searchTerm, setSearchTerm] = useState('');
         const [filters, setFilters] = useState({
             authorName: [],
@@ -52,6 +53,7 @@ const MainPage = () => {
             }
             const data = await response.json();
             setQuotes(data.data);
+            setCountElements(data.totalQuotes)
             setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error.message);
@@ -82,6 +84,7 @@ const MainPage = () => {
                 </div>
                 <div className="content">
                     <SearchBar onSearch={handleSearch} placeholder="Поиск по тексту цитаты"/>
+                    <span className="count-elements">Количество найденных элементов: {countElements}</span>
                     {quotes.map((quote, index) => (
                         <CitationCard key={index} {...quote} />
                     ))}
