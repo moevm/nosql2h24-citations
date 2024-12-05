@@ -7,6 +7,7 @@ import HeroCard from "../components/HeroCard";
 
 const SearchHeroPage = () => {
     const [heroes, setHeroes] = useState([]);
+    const [countElements, setCountElements] = useState(0)
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -14,6 +15,10 @@ const SearchHeroPage = () => {
         authorName: [],
         bookName: [],
     });
+
+    useEffect(() => {
+        document.title = "Герои";
+    }, []);
 
     const fetchHeroes = async () => {
         const queryParams = new URLSearchParams();
@@ -42,6 +47,7 @@ const SearchHeroPage = () => {
             }
             const data = await response.json();
             setHeroes(data.data);
+            setCountElements(data.totalHeroes)
             setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error.message);
@@ -75,6 +81,7 @@ const SearchHeroPage = () => {
             </div>
             <div className="content">
                 <SearchBar onSearch={handleSearch} placeholder="Поиск героя произведения"/>
+                <span className="count-elements">Количество найденных элементов: {countElements}</span>
                 <div className="heroes-list">
                     {heroes.map((hero, index) => (
                         <div key={index} className="hero-item">

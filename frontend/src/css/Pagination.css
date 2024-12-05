@@ -57,6 +57,12 @@
     border: none !important;
     padding: 8px 12px !important;
 }
+
+.pagination button:disabled:hover {
+    background-color: transparent;
+    color: transparent !important;
+    cursor: auto;
+}
 .dots {
     color: #E85A4F;
     font-size: 20px;

@@ -1,16 +1,21 @@
 import React, {useState, useEffect} from "react";
 import YearSlider from "../components/YearSlider";
 import "../css/StatisticsPage.css"
-import Chart from "./Chart";
+import Chart from "../components/Chart";
 import Select from "react-select";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faFileImport, faFileExport } from "@fortawesome/free-solid-svg-icons";
 
 const StatisticsPage = () => {
+    const [countElements, setCountElements] = useState(0)
     const [yearRange, setYearRange] = useState([]);
     const [statistics, setStatistics] = useState([]);
     const [viewMode, setViewMode] = useState("quotes");
     const [filters, setFilters] = useState({ bookYear: [] });
+
+    useEffect(() => {
+        document.title = "Статистика";
+    }, []);
 
     const options = [
         { value: "authors", label: "По авторам" },
@@ -78,6 +83,7 @@ const StatisticsPage = () => {
 
             const result = await response.json();
             setStatistics(result.data);
+            setCountElements(result.totalElements)
         } catch (error) {
             console.error("Ошибка загрузки статистики:", error);
         }
@@ -147,7 +153,6 @@ const StatisticsPage = () => {
                 link.href = window.URL.createObjectURL(blob);
                 link.download = "quotes.json";
                 link.click();
-                alert("Данные успешно экспортированы!");
             } else {
                 alert("Ошибка экспорта данных");
             }
@@ -165,15 +170,18 @@ const StatisticsPage = () => {
                     </div>
                 )}
                 <div className="chart-view-mode">
-                    <div className="view-mode-selector">
-                        <Select
-                            options={options}
-                            value={options.find((option) => option.value === viewMode)}
-                            onChange={(selectedOption) => setViewMode(selectedOption.value)}
-                            styles={customStyles}
-                            menuPlacement="auto"
-                            isSearchable={false}
-                        />
+                    <div className="view-mode-info">
+                        <span className="count-elements-stat">Количество цитат, участвующих в анализе: {countElements}</span>
+                        <div className="view-mode-selector">
+                            <Select
+                                options={options}
+                                value={options.find((option) => option.value === viewMode)}
+                                onChange={(selectedOption) => setViewMode(selectedOption.value)}
+                                styles={customStyles}
+                                menuPlacement="auto"
+                                isSearchable={false}
+                            />
+                        </div>
                     </div>
                     <Chart key={viewMode} data={statistics}/>
                 </div>
