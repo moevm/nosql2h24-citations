@@ -149,7 +149,6 @@ const StatisticsPage = () => {
                 link.href = window.URL.createObjectURL(blob);
                 link.download = "quotes.json";
                 link.click();
-                alert("Данные успешно экспортированы!");
             } else {
                 alert("Ошибка экспорта данных");
             }
