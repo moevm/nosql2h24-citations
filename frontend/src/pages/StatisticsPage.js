@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import YearSlider from "../components/YearSlider";
 import "../css/StatisticsPage.css"
-import Chart from "./Chart";
+import Chart from "../components/Chart";
 import Select from "react-select";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faFileImport, faFileExport } from "@fortawesome/free-solid-svg-icons";
@@ -168,7 +168,7 @@ const StatisticsPage = () => {
                 )}
                 <div className="chart-view-mode">
                     <div className="view-mode-info">
-                        <span className="count-elements">Количество обрабатываемых элементов: {countElements}</span>
+                        <span className="count-elements-stat">Количество обрабатываемых элементов: {countElements}</span>
                         <div className="view-mode-selector">
                             <Select
                                 options={options}
