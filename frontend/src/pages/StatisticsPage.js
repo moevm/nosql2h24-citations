@@ -171,7 +171,7 @@ const StatisticsPage = () => {
                 )}
                 <div className="chart-view-mode">
                     <div className="view-mode-info">
-                        <span className="count-elements-stat">Количество обрабатываемых элементов: {countElements}</span>
+                        <span className="count-elements-stat">Количество цитат, участвующих в анализе: {countElements}</span>
                         <div className="view-mode-selector">
                             <Select
                                 options={options}
