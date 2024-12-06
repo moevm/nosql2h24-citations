@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import "../css/SearchAuthorPage.css"
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
+import {Link} from "react-router-dom";
 const SearchAuthorPage = () => {
+
+    const encodeParam = (param) => encodeURIComponent(param);
     const [authors, setAuthors] = useState([]);
     const [countElements, setCountElements] = useState(0)
     const [searchTerm, setSearchTerm] = useState('');
@@ -58,7 +61,9 @@ const SearchAuthorPage = () => {
             <div className="authors-list">
                 {authors.map((author, index) => (
                     <div key={index} className="author-item">
-                        {author}
+                        <Link to={`/author/${encodeParam(author)}`} className="link">
+                            {author}
+                        </Link>
                     </div>
                 ))}
             </div>
