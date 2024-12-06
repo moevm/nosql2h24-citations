@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/HeroCard.css';
 import {Link} from "react-router-dom";
 
-const HeroCard = ({ authorName, book, hero }) => {
+const HeroCard = ({authorName, book, hero}) => {
 
     const encodeParam = (param) => encodeURIComponent(param);
 
@@ -16,7 +16,11 @@ const HeroCard = ({ authorName, book, hero }) => {
                             {authorName}
                     </Link>
                 </span>
-                <span className="book">{book.name}</span>
+                <span className="book">
+                    <Link to={`/book/${encodeParam(book.name)}`} className="link">
+                            {book.name}
+                    </Link>
+                </span>
             </div>
         </div>
     );
