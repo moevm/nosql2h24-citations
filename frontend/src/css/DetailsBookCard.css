@@ -1,0 +1,43 @@
+.details-book-card {
+    padding: 32px;
+    background-color: transparent;
+    border: 2px solid #D8C3A5;
+    border-radius: 5px;
+    margin-bottom: 16px;
+}
+
+.details-book-text {
+    font-size: 24px;
+    margin-bottom: 16px;
+    margin-top: 0;
+    color: #383838;
+}
+
+.details-book-details {
+    display: flex;
+    gap: 8px;
+    font-size: 20px;
+    color: #383838;
+    flex-direction: column;
+}
+
+.details-book-details span {
+    display: inline-block;
+}
+
+.year,
+.book-count{
+    color: #383838;
+    margin-left: 8px;
+}
+
+.book-link {
+    text-decoration: none;
+    color: inherit;
+    margin-left: 8px;
+}
+
+.book-link:hover {
+    text-decoration: underline;
+    color: #000000;
+}
