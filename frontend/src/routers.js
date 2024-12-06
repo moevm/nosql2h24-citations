@@ -6,6 +6,7 @@ import SearchHeroPage from "./pages/SearchHeroPage";
 import SearchBookPage from "./pages/SearchBookPage";
 import StatisticsPage from "./pages/StatisticsPage";
 import QuoteDetailsPage from "./pages/QuoteDetailsPage";
+import AuthorDetailsPage from "./pages/AuthorDetailsPage";
 
 const AppRoutes = () => {
     return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
             <Route path="/search_book" element={<SearchBookPage />} />
             <Route path="/statistics" element={<StatisticsPage />} />
             <Route path="/quote/:quoteId" element={<QuoteDetailsPage />} />
+            <Route path="/author/:authorName" element={<AuthorDetailsPage />} />
         </Routes>
     );
 };
