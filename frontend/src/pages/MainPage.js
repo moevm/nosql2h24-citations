@@ -89,8 +89,15 @@ const MainPage = () => {
                 <div className="content">
                     <SearchBar onSearch={handleSearch} placeholder="Поиск по тексту цитаты"/>
                     <span className="count-elements">Количество найденных элементов: {countElements}</span>
-                    {quotes.map((quote, index) => (
-                        <CitationCard key={index} {...quote} />
+                    {quotes.map((quote) => (
+                        <CitationCard
+                            key={quote._id}
+                            id={quote._id}
+                            quote={quote.quote}
+                            authorName={quote.authorName}
+                            book={quote.book}
+                            hero={quote.hero}
+                        />
                     ))}
                     <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange} />
                 </div>
