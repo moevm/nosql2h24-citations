@@ -20,11 +20,11 @@ const AuthorDetailsPage = () => {
     }, [authorName, page]);
 
     useEffect(() => {
-        if (authorDetails && authorDetails.author) {
-            document.title = `Автор: ${authorDetails.name}`;
+        if (authorDetails) {
+            document.title = `Автор: ${authorDetails.authorName}`;
             window.scrollTo(0, 0);
         } else {
-            document.title = "Детали цитаты";
+            document.title = "Детали об авторе";
         }
     }, [authorDetails]);
 

@@ -9,7 +9,11 @@ const HeroCard = ({authorName, book, hero}) => {
 
     return (
         <div className="hero-card">
-            <p className="hero-text">{hero}</p>
+            <p className="hero-text">
+                <Link to={`/hero/${encodeParam(hero)}`} className="link">
+                    {hero}
+                </Link>
+            </p>
             <div className="hero-details">
                 <span className="author">
                     <Link to={`/author/${encodeParam(authorName)}`} className="link">

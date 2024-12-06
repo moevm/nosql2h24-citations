@@ -1,44 +1,44 @@
-import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
-import CitationCard from '../components/CitationCard';
-import Pagination from '../components/Pagination';
-import "../css/QuoteDetailsPage.css"
-import DetailsCitationCard from "../components/DetailsCitationCard";
+import {useParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import CitationCard from "../components/CitationCard";
+import Pagination from "../components/Pagination";
+import DetailsHeroCard from "../components/DetailsHeroCard";
+import "../css/HeroDetailsPage.css"
 
-const QuoteDetailsPage = () => {
-    const {quoteId} = useParams();
+const HeroDetailsPage = () => {
+    const {heroName} = useParams();
 
-    const [quoteDetails, setQuoteDetails] = useState(null);
-    const [otherQuotes, setOtherQuotes] = useState([]);
+    const [heroDetails, setHeroDetails] = useState(null);
+    const [otherHeroes, setOtherHeroes] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [error, setError] = useState('');
     const [countElements, setCountElements] = useState(0)
 
     useEffect(() => {
-        fetchQuoteDetails();
-    }, [quoteId, page]);
+        fetchHeroDetails();
+    }, [heroName, page]);
 
     useEffect(() => {
-        if (quoteDetails && quoteDetails.quote) {
-            document.title = quoteDetails.quote;
+        if (heroDetails) {
+            document.title = `Герой: ${heroDetails.heroName}`;
             window.scrollTo(0, 0);
         } else {
-            document.title = "Детали о цитате";
+            document.title = "Детали о герое";
         }
-    }, [quoteDetails]);
+    }, [heroDetails]);
 
-    const fetchQuoteDetails = async () => {
+    const fetchHeroDetails = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/details/quote/${quoteId}?page=${page}&pageLimit=10`);
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/details/hero/${heroName}?page=${page}&pageLimit=10`);
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке деталей цитаты');
             }
             const data = await response.json();
-            setQuoteDetails(data.quote);
-            setCountElements(data.totalQuotes)
-            setOtherQuotes(data.otherQuotesByAuthor);
-            setTotalPages(data.totalPages);
+            setHeroDetails(data);
+            setCountElements(data.totalQuotesByHero)
+            setOtherHeroes(data.quotes);
+            setTotalPages(data.totalPagesByHero);
         } catch (err) {
             console.error(err.message);
             setError(err.message);
@@ -53,27 +53,27 @@ const QuoteDetailsPage = () => {
         return <div className="error-message">Ошибка: {error}</div>;
     }
 
-    if (!quoteDetails) {
+    if (!heroDetails) {
         return <div>Загрузка...</div>;
     }
 
     return (
-        <div className="quote-details-page">
-            <DetailsCitationCard {...quoteDetails}/>
-            <span className="other-quote-title">Другие цитаты:</span>
+        <div className="hero-details-page">
+            <DetailsHeroCard {...heroDetails}/>
+            <span className="other-hero-title">Другие цитаты:</span>
             <span className="count-elements">Количество найденных элементов: {countElements}</span>
-            <div className="other-quote">
+            <div className="other-hero">
 
             </div>
-            {otherQuotes.length === 0 ? (
+            {otherHeroes.length === 0 ? (
                 <p>Других цитат нет.</p>
             ) : (
-                otherQuotes.map((quote) => (
+                otherHeroes.map((quote) => (
                     <CitationCard
                         key={quote._id}
                         id={quote._id}
                         quote={quote.quote}
-                        authorName={quote.authorName}
+                        heroName={quote.heroName}
                         book={quote.book}
                         hero={quote.hero}
                     />
@@ -87,4 +87,4 @@ const QuoteDetailsPage = () => {
     );
 };
 
-export default QuoteDetailsPage;
+export default HeroDetailsPage;
