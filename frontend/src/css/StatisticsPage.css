@@ -1,0 +1,75 @@
+.statistics-page {
+    padding: 32px 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.statistics-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.chart-view-mode {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.view-mode-selector {
+    position: relative;
+    width: 200px;
+}
+
+.statistics-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 32px 0;
+}
+
+.import-button,
+.export-button {
+    background-color: #D8C3A5;
+    color: #000000;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.import-button:hover,
+.export-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.import-button:active,
+.export-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.statistics-buttons .fa-file-import,
+.statistics-buttons .fa-file-export {
+    font-size: 40px;
+}
+
+.view-mode-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.count-elements-stat {
+    font-size: 20px;
+    color: #383838;
+    display: flex;
+    margin-left: 32px;
+}

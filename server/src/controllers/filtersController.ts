@@ -35,7 +35,7 @@ export const getYearRange = async (req: Request, res: Response) => {
 
 export const getUniqueHeroes = async (req: Request, res: Response) => {
     try {
-        const heroes = await Quote.distinct('hero');
+        const heroes = await Quote.distinct('hero', { hero: { $ne: null } });
         res.json(heroes);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching heroes', error });

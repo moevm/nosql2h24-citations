@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  app:
+    container_name: app
+    build: .
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - docker_network
+  db:
+    container_name: db
+    build : ./db
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+       - db-data-citation:/data/db
+    restart: always
+    networks:
+      - docker_network
+  client:
+    build: ./frontend
+    container_name: client_frontend
+    ports:
+      - "127.0.0.1:3001:3000"
+    volumes:
+      - ./frontend:/app:ro
+    stdin_open: true
+    tty: true
+    networks:
+      - docker_network
+
+volumes:
+  db-data-citation:
+networks:
+  docker_network:

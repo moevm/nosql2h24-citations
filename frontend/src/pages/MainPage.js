@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 
 const MainPage = () => {
         const [quotes, setQuotes] = useState([]);
+        const [countElements, setCountElements] = useState(0)
         const [searchTerm, setSearchTerm] = useState('');
         const [filters, setFilters] = useState({
             authorName: [],
@@ -17,6 +18,10 @@ const MainPage = () => {
 
         const [page, setPage] = useState(1);
         const [totalPages, setTotalPages] = useState(1);
+
+    useEffect(() => {
+        document.title = "Главная страница";
+    }, []);
 
 
     const fetchFilteredAndSearchedQuotes = async () => {
@@ -46,12 +51,13 @@ const MainPage = () => {
         queryParams.append('pageSize', '20');
 
         try {
-            const response = await fetch(`http://localhost:3000/quotes/search?${queryParams.toString()}`);
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/quotes/search?${queryParams.toString()}`);
             if (!response.ok) {
                 throw new Error('Ошибка при поиске и фильтрации цитат');
             }
             const data = await response.json();
             setQuotes(data.data);
+            setCountElements(data.totalQuotes)
             setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error.message);
@@ -82,8 +88,16 @@ const MainPage = () => {
                 </div>
                 <div className="content">
                     <SearchBar onSearch={handleSearch} placeholder="Поиск по тексту цитаты"/>
-                    {quotes.map((quote, index) => (
-                        <CitationCard key={index} {...quote} />
+                    <span className="count-elements">Количество найденных элементов: {countElements}</span>
+                    {quotes.map((quote) => (
+                        <CitationCard
+                            key={quote._id}
+                            id={quote._id}
+                            quote={quote.quote}
+                            authorName={quote.authorName}
+                            book={quote.book}
+                            hero={quote.hero}
+                        />
                     ))}
                     <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange} />
                 </div>
