@@ -20,11 +20,11 @@ const BookDetailsPage = () => {
     }, [bookName, page]);
 
     useEffect(() => {
-        if (bookDetails && bookDetails.book) {
+        if (bookDetails) {
             document.title = `Произведение: ${bookDetails.bookName}`;
             window.scrollTo(0, 0);
         } else {
-            document.title = "Детали цитаты";
+            document.title = "Детали о произведении";
         }
     }, [bookDetails]);
 
