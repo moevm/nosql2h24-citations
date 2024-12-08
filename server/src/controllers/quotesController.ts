@@ -26,26 +26,44 @@ export const getQuotes = async (req: Request, res: Response) => {
 };
 
 export const filterAndSearchQuotes = async (req: Request, res: Response) => {
-    const { keyword, authorNames, bookNames, heroes, bookYearStart, bookYearEnd } = req.query;
+    const {
+        keyword,
+        authorNames,
+        authorPartial,
+        bookNames,
+        bookPartial,
+        heroes,
+        heroPartial,
+        bookYearStart,
+        bookYearEnd
+    } = req.query;
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
 
     const filter: any = {};
 
-    if (authorNames) {
-        const authorsArray = Array.isArray(authorNames) ? authorNames : [authorNames];
-        filter.authorName = { $in: authorsArray };
-    }
+    const createMatch = (
+        values: string | string[] | undefined,
+        isPartial: boolean | undefined,
+        fieldName: string
+    ) => {
+        if (!values) return;
 
-    if (bookNames) {
-        const booksArray = Array.isArray(bookNames) ? bookNames : [bookNames];
-        filter['book.name'] = { $in: booksArray };
-    }
+        const arrayValues = Array.isArray(values) ? values : [values];
+        if (isPartial) {
+            filter[fieldName] = {
+                $in: arrayValues.map(value => new RegExp(value, "i"))
+            };
+        } else {
+            filter[fieldName] = { $in: arrayValues };
+        }
+    };
 
-    if (heroes) {
-        const heroesArray = Array.isArray(heroes) ? heroes : [heroes];
-        filter.hero = { $in: heroesArray };
-    }
+    createMatch(authorNames as string | string[], authorPartial === "true", "authorName");
+
+    createMatch(bookNames as string | string[], bookPartial === "true", "book.name");
+
+    createMatch(heroes as string | string[], heroPartial === "true", "hero");
 
     if (bookYearStart || bookYearEnd) {
         filter['book.year'] = {};
