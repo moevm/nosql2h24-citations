@@ -133,10 +133,8 @@ export const getBookDetails = async (req: Request, res: Response): Promise<Respo
 
 export const getHeroDetails = async (req: Request, res: Response): Promise<Response> => {
     const { heroName } = req.params;
-    const heroPage = parseInt(req.query.page as string) || 1;
-    const heroPageLimit = parseInt(req.query.pageLimit as string) || 10;
-    const bookPage = parseInt(req.query.page as string) || 1;
-    const bookPageLimit = parseInt(req.query.pageLimit as string) || 10;
+    const page = parseInt(req.query.page as string) || 1;
+    const pageLimit = parseInt(req.query.pageLimit as string) || 10;
 
     try {
         const quotes = await Quote.find({ hero: heroName }).exec();
@@ -155,36 +153,32 @@ export const getHeroDetails = async (req: Request, res: Response): Promise<Respo
             new Map(books.map(book => [`${book.name}-${book.year}`, book])).values()
         );
 
-        const heroQuotes = await Quote.find({ hero: heroName })
-            .skip((heroPage - 1) * heroPageLimit)
-            .limit(heroPageLimit)
-            .exec();
-
+        const heroQuotes = await Quote.find({ hero: heroName }).exec();
         const bookName = quotes[0].book.name;
 
-        const quotesFromBook = await Quote.find({ 'book.name': bookName })
-            .skip((bookPage - 1) * bookPageLimit)
-            .limit(bookPageLimit)
-            .exec();
+        const quotesFromBook = await Quote.find({
+            'book.name': bookName,
+            hero: { $ne: heroName }
+        }).exec();
 
-        const totalQuotesInBook = await Quote.countDocuments({ 'book.name': bookName }).exec();
-        const totalPagesInBook = Math.ceil(totalQuotesInBook / heroPageLimit);
+        const combinedQuotes = [...heroQuotes, ...quotesFromBook];
 
-        const totalQuotesByHero = quotes.length;
-        const totalPagesByHero = Math.ceil(totalQuotesByHero / bookPageLimit);
+        const totalQuotes = combinedQuotes.length;
+        const totalPages = Math.ceil(totalQuotes / pageLimit);
+
+        const paginatedQuotes = combinedQuotes.slice(
+            (page - 1) * pageLimit,
+            page * pageLimit
+        );
 
         return res.json({
             heroName,
             books: uniqueBooks,
             authors,
-            quotes: heroQuotes,
-            quotesFromBook,
-            heroPage,
-            bookPage,
-            totalPagesByHero,
-            totalQuotesByHero,
-            totalPagesInBook,
-            totalQuotesInBook
+            quotes: paginatedQuotes,
+            page,
+            totalQuotes,
+            totalPages
         });
     } catch (err) {
         return res.status(500).json({ message: 'Error fetching hero details', error: err });
