@@ -14,6 +14,9 @@ const MainPage = () => {
             bookName: [],
             bookYear: [],
             heroName: [],
+            authorPartial: false,
+            bookPartial: false,
+            heroPartial: false
         });
 
         const [page, setPage] = useState(1);
@@ -27,29 +30,52 @@ const MainPage = () => {
     const fetchFilteredAndSearchedQuotes = async () => {
         const queryParams = new URLSearchParams();
 
-        if (filters.authorName.length) {
-            filters.authorName.forEach((author) => {
-                queryParams.append('authorNames', author);
-            });
+        if (filters.authorPartial) {
+            queryParams.append('authorNames', filters.authorName);
+            queryParams.append('authorPartial', filters.authorPartial);
+        } else {
+            if (filters.authorName.length) {
+                filters.authorName.forEach((author) => {
+                    queryParams.append('authorNames', author);
+                    queryParams.append('authorPartial', filters.authorPartial);
+                });
+            }
         }
-        if (filters.bookName.length) {
-            filters.bookName.forEach((book) => {
-                queryParams.append('bookNames', book);
-            });
+
+        if (filters.bookPartial) {
+            queryParams.append('bookNames', filters.bookName);
+            queryParams.append('bookPartial', filters.bookPartial);
+        } else {
+            if (filters.bookName.length) {
+                filters.bookName.forEach((book) => {
+                    queryParams.append('bookNames', book);
+                    queryParams.append('bookPartial', filters.bookPartial);
+                });
+            }
         }
+
+
         if (filters.bookYear.length) {
             queryParams.append('bookYearStart', filters.bookYear[0]);
             queryParams.append('bookYearEnd', filters.bookYear[1]);
         }
-        if (filters.heroName.length) {
-            filters.heroName.forEach((hero) => {
-                queryParams.append('heroes', hero);
-            });
-        } 
+
+        if (filters.heroPartial) {
+            queryParams.append('heroes', filters.heroName);
+            queryParams.append('heroPartial', filters.heroPartial);
+        } else {
+            if (filters.heroName.length) {
+                filters.heroName.forEach((hero) => {
+                    queryParams.append('heroes', hero);
+                    queryParams.append('heroPartial', filters.heroPartial);
+                });
+            }
+        }
         if (searchTerm) queryParams.append('keyword', searchTerm);
         queryParams.append('page', page.toString());
         queryParams.append('pageSize', '20');
 
+        console.log(`${process.env.REACT_APP_API_URL}/quotes/search?${queryParams.toString()}`)
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/quotes/search?${queryParams.toString()}`);
             if (!response.ok) {

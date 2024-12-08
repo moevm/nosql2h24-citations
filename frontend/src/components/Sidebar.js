@@ -3,8 +3,9 @@ import '../css/Sidebar.css';
 import YearSlider from "./YearSlider";
 import {faChevronDown, faChevronUp, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import SearchBar from "./SearchBar";
 
-const Sidebar = ({onFilterChange}) => {
+const Sidebar = ({ onFilterChange }) => {
     const [authors, setAuthors] = useState([]);
     const [books, setBooks] = useState([]);
     const [heroes, setHeroes] = useState([]);
@@ -12,6 +13,14 @@ const Sidebar = ({onFilterChange}) => {
     const [selectedBooks, setSelectedBooks] = useState([]);
     const [selectedHeroes, setSelectedHeroes] = useState([]);
     const [yearRange, setYearRange] = useState([]);
+
+    const [authorSearch, setAuthorSearch] = useState("");
+    const [bookSearch, setBookSearch] = useState("");
+    const [heroSearch, setHeroSearch] = useState("");
+
+    const [authorPartial, setAuthorPartial] = useState(false);
+    const [bookPartial, setBookPartial] = useState(false);
+    const [heroPartial, setHeroPartial] = useState(false);
 
     const defaultDisplayCount = 10;
     const [displayCount, setDisplayCount] = useState({
@@ -80,6 +89,31 @@ const Sidebar = ({onFilterChange}) => {
         return array.includes(value) ? array.filter(item => item !== value) : [...array, value];
     };
 
+    const handleSearchChange = (category, value) => {
+        if (category === 'author') {
+            setAuthorSearch(value);
+            setAuthorPartial(value.trim() !== "");
+            onFilterChange({
+                authorName: value,
+                authorPartial: value.trim() !== "",
+            });
+        } else if (category === 'book') {
+            setBookSearch(value);
+            setBookPartial(value.trim() !== "");
+            onFilterChange({
+                bookName: value,
+                bookPartial: value.trim() !== "",
+            });
+        } else if (category === 'hero') {
+            setHeroSearch(value);
+            setHeroPartial(value.trim() !== "");
+            onFilterChange({
+                heroName: value,
+                heroPartial: value.trim() !== "",
+            });
+        }
+    };
+
     const handleYearRangeChange = (newRange) => {
         // setYearRange(newRange);
         onFilterChange({bookYear: newRange});
@@ -110,9 +144,10 @@ const Sidebar = ({onFilterChange}) => {
     return (
         <div className="sidebar">
             <div className="filter-section">
-                <h3 onClick={() => toggleFilterVisibility('books')} style={{cursor: 'pointer'}}>
+                <SearchBar placeholder="Поиск по произведению" onSearch={(value) => handleSearchChange('book', value)} />
+                <h3 onClick={() => toggleFilterVisibility('books')} style={{ cursor: 'pointer' }}>
                     Произведение
-                    <FontAwesomeIcon icon={filterVisibility.books ? faChevronUp : faChevronDown} className="icon"/>
+                    <FontAwesomeIcon icon={filterVisibility.books ? faChevronUp : faChevronDown} className="icon" />
                 </h3>
                 {filterVisibility.books && (
                     <div className="filters">
@@ -137,9 +172,10 @@ const Sidebar = ({onFilterChange}) => {
             </div>
 
             <div className="filter-section">
-                <h3 onClick={() => toggleFilterVisibility('authors')} style={{cursor: 'pointer'}}>
+                <SearchBar placeholder="Поиск по автору" onSearch={(value) => handleSearchChange('author', value)} />
+                <h3 onClick={() => toggleFilterVisibility('authors')} style={{ cursor: 'pointer' }}>
                     Автор
-                    <FontAwesomeIcon icon={filterVisibility.authors ? faChevronUp : faChevronDown} className="icon"/>
+                    <FontAwesomeIcon icon={filterVisibility.authors ? faChevronUp : faChevronDown} className="icon" />
                 </h3>
                 {filterVisibility.authors && (
                     <div className="filters">
@@ -163,12 +199,13 @@ const Sidebar = ({onFilterChange}) => {
                 )}
             </div>
 
-            <YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange}/>
+            <YearSlider onYearRangeChange={handleYearRangeChange} initialRange={yearRange} />
 
             <div className="filter-section">
-                <h3 onClick={() => toggleFilterVisibility('heroes')} style={{cursor: 'pointer'}}>
+                <SearchBar placeholder="Поиск по герою" onSearch={(value) => handleSearchChange('hero', value)} />
+                <h3 onClick={() => toggleFilterVisibility('heroes')} style={{ cursor: 'pointer' }}>
                     Герой
-                    <FontAwesomeIcon icon={filterVisibility.heroes ? faChevronUp : faChevronDown} className="icon"/>
+                    <FontAwesomeIcon icon={filterVisibility.heroes ? faChevronUp : faChevronDown} className="icon" />
                 </h3>
                 {filterVisibility.heroes && (
                     <div className="filters">
