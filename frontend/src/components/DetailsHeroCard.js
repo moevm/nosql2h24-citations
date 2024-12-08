@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import React from "react";
 import "../css/DetailsHeroCard.css"
 
-const DetailsHeroCard = ({heroName, books, authors, totalQuotesByHero}) => {
+const DetailsHeroCard = ({heroName, books, authors}) => {
     const encodeParam = (param) => encodeURIComponent(param);
 
     return (
@@ -30,10 +30,10 @@ const DetailsHeroCard = ({heroName, books, authors, totalQuotesByHero}) => {
                     <span className="book_year-d">{books[0].year} г</span>
                 </div>
 
-                <div>
-                    <span className="title-count">Количество цитат:</span>
-                    <span className="book-count">{totalQuotesByHero}</span>
-                </div>
+                {/*<div>*/}
+                {/*    <span className="title-count">Количество цитат:</span>*/}
+                {/*    <span className="book-count">{totalQuotesByHero}</span>*/}
+                {/*</div>*/}
             </div>
         </div>
     );

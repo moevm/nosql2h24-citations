@@ -36,9 +36,9 @@ const HeroDetailsPage = () => {
             }
             const data = await response.json();
             setHeroDetails(data);
-            setCountElements(data.totalQuotesByHero)
+            setCountElements(data.totalQuotes)
             setOtherHeroes(data.quotes);
-            setTotalPages(data.totalPagesByHero);
+            setTotalPages(data.totalPages);
         } catch (err) {
             console.error(err.message);
             setError(err.message);
