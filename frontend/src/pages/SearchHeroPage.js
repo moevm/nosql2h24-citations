@@ -14,6 +14,8 @@ const SearchHeroPage = () => {
     const [filters, setFilters] = useState({
         authorName: [],
         bookName: [],
+        authorPartial: "",
+        bookPartial: "",
     });
 
     useEffect(() => {
@@ -23,11 +25,20 @@ const SearchHeroPage = () => {
     const fetchHeroes = async () => {
         const queryParams = new URLSearchParams();
 
+        if (filters.authorPartial.length) {
+            queryParams.append('authorPartial', filters.authorPartial);
+        }
+
         if (filters.authorName.length) {
             filters.authorName.forEach((author) => {
                 queryParams.append('authorNames', author);
             });
         }
+
+        if (filters.bookPartial.length) {
+            queryParams.append('bookPartial', filters.bookPartial);
+        }
+
         if (filters.bookName.length) {
             filters.bookName.forEach((book) => {
                 queryParams.append('bookNames', book);

@@ -2,12 +2,16 @@ import React, {useEffect, useState} from 'react';
 import '../css/Sidebar.css';
 import {faChevronDown, faChevronUp, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import SearchBar from "./SearchBar";
 
 const SidebarHero = ({onFilterChange}) => {
     const [authors, setAuthors] = useState([]);
     const [books, setBooks] = useState([]);
     const [selectedAuthors, setSelectedAuthors] = useState([]);
     const [selectedBooks, setSelectedBooks] = useState([]);
+
+    const [authorSearch, setAuthorSearch] = useState("");
+    const [bookSearch, setBookSearch] = useState("");
 
     const defaultDisplayCount = 10;
     const [displayCount, setDisplayCount] = useState({
@@ -61,6 +65,20 @@ const SidebarHero = ({onFilterChange}) => {
         return array.includes(value) ? array.filter(item => item !== value) : [...array, value];
     };
 
+    const handleSearchChange = (category, value) => {
+        if (category === 'author') {
+            setAuthorSearch(value);
+            onFilterChange({
+                authorPartial: value,
+            });
+        } else if (category === 'book') {
+            setBookSearch(value);
+            onFilterChange({
+                bookPartial: value,
+            });
+        }
+    };
+
 
 
     const toggleFilterVisibility = (filterName) => {
@@ -88,6 +106,7 @@ const SidebarHero = ({onFilterChange}) => {
     return (
         <div className="sidebar">
             <div className="filter-section">
+                <SearchBar placeholder="Поиск по произведению" onSearch={(value) => handleSearchChange('book', value)} />
                 <h3 onClick={() => toggleFilterVisibility('books')} style={{cursor: 'pointer'}}>
                     Произведение
                     <FontAwesomeIcon icon={filterVisibility.books ? faChevronUp : faChevronDown} className="icon"/>
@@ -115,6 +134,7 @@ const SidebarHero = ({onFilterChange}) => {
             </div>
 
             <div className="filter-section">
+                <SearchBar placeholder="Поиск по автору" onSearch={(value) => handleSearchChange('author', value)} />
                 <h3 onClick={() => toggleFilterVisibility('authors')} style={{cursor: 'pointer'}}>
                     Автор
                     <FontAwesomeIcon icon={filterVisibility.authors ? faChevronUp : faChevronDown} className="icon"/>
