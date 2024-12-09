@@ -3,11 +3,14 @@ import '../css/Sidebar.css';
 import YearSlider from "./YearSlider";
 import {faChevronDown, faChevronUp, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import SearchBar from "./SearchBar";
 
 const SidebarBook = ({onFilterChange}) => {
     const [authors, setAuthors] = useState([]);
     const [selectedAuthors, setSelectedAuthors] = useState([]);
     const [yearRange, setYearRange] = useState([]);
+
+    const [authorSearch, setAuthorSearch] = useState("");
 
     const defaultDisplayCount = 10;
     const [displayCount, setDisplayCount] = useState({
@@ -21,11 +24,11 @@ const SidebarBook = ({onFilterChange}) => {
     useEffect(() => {
         const fetchFilters = async () => {
             try {
-                const authorsResponse = await fetch('http://localhost:3000/filters/authors');
+                const authorsResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/authors`);
                 const authorsData = await authorsResponse.json();
                 setAuthors(authorsData);
 
-                const yearsResponse = await fetch('http://localhost:3000/filters/years');
+                const yearsResponse = await fetch(`${process.env.REACT_APP_API_URL}/filters/years`);
                 const yearsData = await yearsResponse.json();
                 setYearRange([yearsData.minYear, yearsData.maxYear]);
             } catch (error) {
@@ -59,6 +62,15 @@ const SidebarBook = ({onFilterChange}) => {
         onFilterChange({bookYear: newRange});
     };
 
+    const handleSearchChange = (category, value) => {
+        if (category === 'author') {
+            setAuthorSearch(value);
+            onFilterChange({
+                authorPartial: value,
+            });
+        }
+    };
+
 
     const toggleFilterVisibility = (filterName) => {
         setFilterVisibility(prev => ({
@@ -85,6 +97,7 @@ console.log(authors)
     return (
         <div className="sidebar">
             <div className="filter-section">
+                <SearchBar placeholder="Поиск по автору" onSearch={(value) => handleSearchChange('author', value)} />
                 <h3 onClick={() => toggleFilterVisibility('authors')} style={{cursor: 'pointer'}}>
                     Автор
                     <FontAwesomeIcon icon={filterVisibility.authors ? faChevronUp : faChevronDown} className="icon"/>

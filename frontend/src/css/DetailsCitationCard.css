@@ -1,4 +1,4 @@
-.book-card {
+.details-citation-card {
     padding: 32px;
     background-color: transparent;
     border: 2px solid #D8C3A5;
@@ -6,35 +6,39 @@
     margin-bottom: 16px;
 }
 
-.book-text {
+.details-citation-text {
     font-size: 24px;
     margin-bottom: 16px;
     margin-top: 0;
     color: #383838;
 }
 
-.book-details {
+.details-citation-details {
     display: flex;
-    gap: 24px;
+    gap: 8px;
     font-size: 20px;
     color: #383838;
+    flex-direction: column;
 }
 
-.book-details span {
+.details-citation-details span {
     display: inline-block;
 }
 
-.year,
-.author {
+.hero-d,
+.book-d,
+.author-d,
+.book_year-d {
     color: #383838;
+    margin-left: 8px;
 }
 
-.link {
+.details-link {
     text-decoration: none;
     color: inherit;
 }
 
-.link:hover {
+.details-link {
     text-decoration: underline;
     color: #000000;
 }
