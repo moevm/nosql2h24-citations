@@ -16,16 +16,17 @@ export const getBooks = async (req: Request, res: Response) => {
     const filter: any = {};
 
     const createExactMatch = (values: string | string[] | undefined, fieldName: string) => {
-        if (!values) return;
-
-        const arrayValues = Array.isArray(values) ? values : [values];
-        filter[fieldName] = { $in: arrayValues };
+        if (values) {
+            const arrayValues = Array.isArray(values) ? values : [values];
+            filter[fieldName] = { ...filter[fieldName], $in: arrayValues };
+        }
     };
 
     const createPartialMatch = (value: string | undefined, fieldName: string) => {
-        if (!value) return;
-
-        filter[fieldName] = new RegExp(value, "i");
+        if (value) {
+            const regex = new RegExp(value, "i");
+            filter[fieldName] = { ...filter[fieldName], $regex: regex };
+        }
     };
 
     createExactMatch(authorNames as string | string[], "authorName");

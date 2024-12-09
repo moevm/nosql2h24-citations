@@ -15,19 +15,20 @@ export const getHeroes = async (req: Request, res: Response) => {
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
 
-    const filter: any = {};
+    const filter: any = {hero : {$ne: null}};
 
     const createExactMatch = (values: string | string[] | undefined, fieldName: string) => {
-        if (!values) return;
-
-        const arrayValues = Array.isArray(values) ? values : [values];
-        filter[fieldName] = { $in: arrayValues };
+        if (values) {
+            const arrayValues = Array.isArray(values) ? values : [values];
+            filter[fieldName] = { ...filter[fieldName], $in: arrayValues };
+        }
     };
 
     const createPartialMatch = (value: string | undefined, fieldName: string) => {
-        if (!value) return;
-
-        filter[fieldName] = new RegExp(value, "i");
+        if (value) {
+            const regex = new RegExp(value, "i");
+            filter[fieldName] = { ...filter[fieldName], $regex: regex };
+        }
     };
 
     createExactMatch(authorNames as string | string[], "authorName");
