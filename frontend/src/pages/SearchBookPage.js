@@ -14,6 +14,7 @@ const SearchBookPage = () => {
     const [filters, setFilters] = useState({
         authorName: [],
         bookYear: [],
+        authorPartial: "",
     });
 
     useEffect(() => {
@@ -22,6 +23,10 @@ const SearchBookPage = () => {
 
     const fetchHeroes = async () => {
         const queryParams = new URLSearchParams();
+
+        if (filters.authorPartial.length) {
+            queryParams.append('authorPartial', filters.authorPartial);
+        }
 
         if (filters.authorName.length) {
             filters.authorName.forEach((author) => {
@@ -89,9 +94,9 @@ const SearchBookPage = () => {
                         </div>
                     ))}
                 </div>
-                {totalPages > 1 && (
+                {/*{totalPages > 1 && (*/}
                     <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange}/>
-                )}
+                {/*)}*/}
             </div>
 
         </div>
