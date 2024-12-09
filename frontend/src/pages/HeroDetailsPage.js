@@ -79,9 +79,9 @@ const HeroDetailsPage = () => {
                     />
                 ))
             )}
-            {totalPages > 1 && (
+            {/*{totalPages > 1 && (*/}
                 <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange}/>
-            )}
+            {/*)}*/}
 
         </div>
     );
