@@ -18,10 +18,6 @@ const Sidebar = ({ onFilterChange }) => {
     const [bookSearch, setBookSearch] = useState("");
     const [heroSearch, setHeroSearch] = useState("");
 
-    const [authorPartial, setAuthorPartial] = useState(false);
-    const [bookPartial, setBookPartial] = useState(false);
-    const [heroPartial, setHeroPartial] = useState(false);
-
     const defaultDisplayCount = 10;
     const [displayCount, setDisplayCount] = useState({
         books: defaultDisplayCount,
@@ -92,24 +88,18 @@ const Sidebar = ({ onFilterChange }) => {
     const handleSearchChange = (category, value) => {
         if (category === 'author') {
             setAuthorSearch(value);
-            setAuthorPartial(value.trim() !== "");
             onFilterChange({
-                authorName: value,
-                authorPartial: value.trim() !== "",
+                authorPartial: value,
             });
         } else if (category === 'book') {
             setBookSearch(value);
-            setBookPartial(value.trim() !== "");
             onFilterChange({
-                bookName: value,
-                bookPartial: value.trim() !== "",
+                bookPartial: value,
             });
         } else if (category === 'hero') {
             setHeroSearch(value);
-            setHeroPartial(value.trim() !== "");
             onFilterChange({
-                heroName: value,
-                heroPartial: value.trim() !== "",
+                heroPartial: value,
             });
         }
     };
