@@ -1,4 +1,4 @@
-.book-card {
+.details-author-card {
     padding: 32px;
     background-color: transparent;
     border: 2px solid #D8C3A5;
@@ -6,35 +6,42 @@
     margin-bottom: 16px;
 }
 
-.book-text {
+.details-author-text {
     font-size: 24px;
     margin-bottom: 16px;
     margin-top: 0;
     color: #383838;
 }
 
-.book-details {
+.details-author-details {
     display: flex;
-    gap: 24px;
+    gap: 8px;
     font-size: 20px;
     color: #383838;
+    flex-direction: column;
 }
 
-.book-details span {
+.details-author-details span {
     display: inline-block;
 }
 
-.year,
-.author {
-    color: #383838;
+.books-container {
+    display: flex;
+    align-items: flex-start;
 }
 
-.link {
+.count,
+.book-list {
+    color: #383838;
+    margin-left: 16px;
+}
+
+.author-link {
     text-decoration: none;
     color: inherit;
 }
 
-.link:hover {
+.author-link:hover {
     text-decoration: underline;
     color: #000000;
 }

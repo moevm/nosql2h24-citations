@@ -21,3 +21,13 @@
     margin-bottom: 4px;
     display: flex;
 }
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: #000000;
+}
