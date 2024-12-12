@@ -53,7 +53,9 @@ export const getBooks = async (req: Request, res: Response) => {
                         name: "$book.name",
                         year: "$book.year",
                         authorName: "$authorName"
-                    }
+                    },
+                    totalQuotes: { $sum: 1 },
+                    uniqueHeroes: { $addToSet: "$hero" }
                 }
             },
             {
@@ -61,9 +63,11 @@ export const getBooks = async (req: Request, res: Response) => {
                     _id: 0,
                     name: "$_id.name",
                     year: "$_id.year",
-                    authorName: "$_id.authorName"
+                    authorName: "$_id.authorName",
+                    totalQuotes: 1,
+                    totalHeroes: { $size: "$uniqueHeroes" }
                 }
-            }
+            },
         ]);
 
         const totalBooks = books.length;
