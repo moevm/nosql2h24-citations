@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/BookCard.css';
 import {Link} from "react-router-dom";
 
-const BookCard = ({  name, year, authorName, }) => {
+const BookCard = ({  name, year, authorName, totalQuotes, totalHeroes }) => {
     const encodeParam = (param) => encodeURIComponent(param);
     return (
         <div className="book-card">
@@ -18,6 +18,8 @@ const BookCard = ({  name, year, authorName, }) => {
                     </Link>
                 </span>
                 <span className="year">{year} г</span>
+                <span className="total-quotes">Количество цитат: {totalQuotes}</span>
+                <span className="total-heroes">Количество героев: {totalHeroes}</span>
             </div>
         </div>
     );
